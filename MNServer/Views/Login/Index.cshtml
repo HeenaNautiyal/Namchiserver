@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+    var id = @TempData["Roleid"];
+    var role = @TempData["ErrorMessage"];
+    var viewTemp = @TempData["Viewstr"];
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Scripts/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/simple-sidebar.css" rel="stylesheet" />
+    <script type="text/javascript">
+        if (role != null) {
+            alert("Abc");
+        }
+
+    </script>
+
+
+    <title>DashBoard</title>
+</head>
+<body>
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+
+            <div class="list-group list-group-flush">
+
+                @if (viewTemp.Equals("Max"))
+                {
+                    <a href="~/Dashboard/Dashboard#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                    @Html.ActionLink("Birth Registration", "BirthRegistration", "BirthRegist", new { FormType = "BR" }, null)
+                    @Html.ActionLink("Death Registration", "BirthRegistration", "BirthRegist", new { FormType = "DT" }, null)
+
+                    <a href="~/UP/GetAllEmployees#" class="list-group-item list-group-item-action bg-light">Get All Birth Registration</a>
+                    <a href="~/Profile/RegistrationType#" class="list-group-item list-group-item-action bg-light">Profile</a>
+                    <a href="~/ShowAllRecords/Index#" class="list-group-item list-group-item-action bg-light">Show All Birth Registration</a>
+
+                    <input type="button" class="btn-primary" value="Logout" checked="checked" onclick="location.href='@Url.Action("Logout", "Dashboard")'">
+                }
+                else if (viewTemp.Equals("Admin"))
+                {
+
+                    <a href="~/Dashboard/Dashboard#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                    @Html.ActionLink("Birth Registration", "BirthRegistration", "BirthRegist", new { FormType = "BR" }, null)
+                    @Html.ActionLink("Death Registration", "BirthRegistration", "BirthRegist", new { FormType = "DT" }, null)
+                    <a href="~/UP/GetAllEmployees#" class="list-group-item list-group-item-action bg-light">Get All Birth Registration</a>
+                    <a href="~/Profile/RegistrationType#" class="list-group-item list-group-item-action bg-light">Profile</a>
+                    <a href="~/ShowAllRecords/Index#" class="list-group-item list-group-item-action bg-light">Show All Birth Registration</a>
+
+                    <input type="button" class="btn-primary" value="Logout" checked="checked" onclick="location.href='@Url.Action("Logout","Dashboard")'">
+
+                }
+                else
+                {
+                    <a href="~/Dashboard/Dashboard#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                    @Html.ActionLink("Birth Registration", "BirthRegistration", "BirthRegist", new { FormType = "BR" }, null)
+                    @Html.ActionLink("Death Registration", "BirthRegistration", "BirthRegist", new { FormType = "DT" }, null)
+                    <a href="~/UP/GetAllEmployees#" class="list-group-item list-group-item-action bg-light" style="display:none;">Get All Birth Registration</a>
+                    <a href="~/Profile/RegistrationType#" class="list-group-item list-group-item-action bg-light">Profile</a>
+                    <a href="~/ShowAllRecords/Index#" class="list-group-item list-group-item-action bg-light" style="display:none;">Show All Birth Registration</a>
+
+                    <input type="button" class="btn-primary" value="Logout" checked="checked" onclick="location.href='@Url.Action("Logout","Dashboard")'">
+                }
+
+
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                @*<button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>*@
+                <span class="navbar-toggler-icon" id="menu-toggle"></span>
+
+            </nav>
+
+
+        </div>
+        <!-- /#page-content-wrapper -->
+
+
+
+    </div>
+    @if (TempData["Message"] != null)
+    {
+        <div>
+            <button type="button">@TempData["Message"]</button>
+        </div>
+    }
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+﻿@model MNServer.ProcessAction.Model.BirthProcess
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Birth Certificate</title>
+    <link href="~/Scripts/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <link href="~/Scripts/Test.css" rel="stylesheet" />
+
+    @*<link href="~/Script/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/Script/jquery-1.12.4.min.js"></script>
+        <link href="~/Script/Test.css" rel="stylesheet" />*@
+
+</head>
+
+<body>
+
+    <div class="text-center form-group Heading">Birth Registration</div>
+
+    <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
+        @using (Html.BeginForm("BirthRegistration", "BirthRegist", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <div class="ValidateLable">
+                    <p>@ViewBag.MyString</p>
+                </div>
+                <div class="FontStyle">
+
+                    <div class="form-row">
+                        <div class="col-md-12 input-group DivMargin  ">
+                            <div id="DivDummy" class="col-md-0 "></div>
+                            <div class="form-group col-md-5">
+
+                                Name Of Informant
+                                @Html.TextBoxFor(m => m.Name_of_Informant, new { placeholder = " Name Of Informant", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Name_of_Informant, "", new { @class = "text-danger" })
+                            </div>
+                            <div id="DivDummy" class="col-md-2 "></div>
+                            <div class="form-group col-md-5">
+                                Name Of Child
+                                @Html.TextBoxFor(m => m.Name_of_Child, new { placeholder = " Name Of Child", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Name_of_Child, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 input-group DivMargin  ">
+                            <div id="DivDummy" class="col-md-0 "></div>
+                            <div class="form-group col-md-5">
+
+                                Gender Of Child
+
+
+                                @Html.DropDownList("Gender_Of_Child", new List<SelectListItem>
+                                    {
+                                       new SelectListItem{ Text="--Select Gender--" },
+                                       new SelectListItem{ Text="Male" },
+                                       new SelectListItem{ Text="Female" },
+                                    },
+                                     new {@class="form-control"}
+                                                           )
+                                @Html.ValidationMessageFor(m => m.Gender_Of_Child, "", new { @class = "text-danger" })
+                            </div>
+                            <div id="DivDummy" class="col-md-2 "></div>
+                            <div class="form-group col-md-5">
+                                Name Of Father
+                                @Html.TextBoxFor(m => m.Name_of_Father, new { placeholder = " Name Of Father", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Name_of_Father, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="col-md-12 input-group DivMargin  ">
+                            <div id="DivDummy" class="col-md-0 "></div>
+                            <div class="form-group col-md-5">
+                                Name Of Mother
+                                @Html.TextBoxFor(m => m.Name_of_Mother, new { placeholder = "  Name Of Mother", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Name_of_Mother, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div id="DivDummy" class="col-md-2 "></div>
+                            <div class="form-group col-md-5">
+                                Date Of Birth
+                                @Html.TextBoxFor(m => m.Date_of_Birth, new { placeholder = "   Date Of Birth", @class = "form-control", type = "date" })
+                                @Html.ValidationMessageFor(m => m.Date_of_Birth, "", new { @class = "text-danger" })
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 input-group DivMargin  ">
+                            <div id="DivDummy" class="col-md-0 "></div>
+                            <div class="form-group col-md-5">
+                                Place Of Birth
+                                @Html.TextBoxFor(m => m.Place_of_Birth, new { placeholder = "Place Of Birth", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Place_of_Birth, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div id="DivDummy" class="col-md-2 "></div>
+                            <div class="form-group col-md-5">
+                                Address
+                                @Html.TextBoxFor(m => m.Address, new { placeholder = " Address", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 input-group DivMargin  ">
+                            <div id="DivDummy" class="col-md-0 "></div>
+                            <div class="form-group col-md-5">
+                                Gram Panchayat Unit
+                                @Html.TextBoxFor(m => m.Gram_Panchayat_Unit, new { placeholder = " Gram Panchayat Unit", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Gram_Panchayat_Unit, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div id="DivDummy" class="col-md-2 "></div>
+                            <div class="form-group col-md-5">
+                                Document Type
+
+                                @Html.DropDownList("DocumentType", new List<SelectListItem>
+                                {
+                                   new SelectListItem{ Text="----Select Document Type----" },
+                                   new SelectListItem{ Text="Election Voter ID" },
+                                   new SelectListItem{ Text="Pan" },
+                                   new SelectListItem{ Text="Aadhar" },
+                                },
+                                 new { @class = "form-control" }
+                                                       )
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 input-group DivMargin">
+                            <div id="DivDummy" class="col-md-0 "></div>
+
+
+                            <div class="col-md-5">
+                                Files
+                                @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div id="DivDummy" class="col-md-2 "></div>
+                            <div class="form-group col-md-5">
+                                Are you Indian ? <br />
+                                <input type="radio" name="Nationality" value="True">Yes
+                                <input type="radio" name="Nationality" value="False">No <br />
+                                @Html.ValidationMessageFor(m => m.Nationality, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-left: 350px; padding: 10px;">
+                        <input type="submit" value="Register" class="btn btn-success" />
+                        <input type="submit" value="Reset  " class="btn btn-primary" />
+                    </div>
+                </div>
+
+            </fieldset>
+
+        }
+        <div>
+
+            <h5 style="color:red">@TempData["Responce"]</h5>
+
+        </div>
+    </div>
+
+
+</body>
+</html>

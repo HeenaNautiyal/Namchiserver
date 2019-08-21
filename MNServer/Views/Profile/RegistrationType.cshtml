@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RegistrationType</title>
+    <link href="~/Scripts/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Test.css" rel="stylesheet" />
+
+
+</head>
+<body>
+
+    <div class="text-center form-group Heading" style="padding:10px;">User Type</div>
+    <div class="panel panel-body panel-heading col-md-2" style=" border: 2px groove #ddd !important; border-radius: 7px; margin-left:41%;">
+        <div>
+
+            <div>
+                <input type="button" class="btn-primary" value="Indivisual" checked="checked" onclick="location.href='@Url.Action("IndexProfile","Profile",new {id=0 })'">
+                <input type="button" class="btn-success" value="Organisation" onclick="location.href='@Url.Action("IndexProfile", "Profile",new {id=1 })'">
+                @*<input type="radio" name="browser" onclick="check(this.value)" value="Organization"> Organization*@
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+''

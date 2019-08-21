@@ -1,0 +1,99 @@
+﻿@model MNServer.Models.Tbl_UserMaster
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+    <script src="~/Scripts/jquery-1.8.3.min.js"></script>
+    <link href="~/Scripts/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <link href="~/Scripts/Test.css" rel="stylesheet" />
+
+    <div class="text-center form-group Heading" style="padding:10px;">User Registration</div>
+
+    <div class="form-horizontal" style="margin-bottom:15px;">
+        <div class="panel panel-body panel-heading col-md-4" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:32%;">
+
+            @using (Html.BeginForm(FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+
+                <fieldset>
+                    <div class="ValidateLable">
+                        <p>@ViewBag.MyString</p>
+                    </div>
+                    <div class="FontStyle">
+                        <div class="form-group">
+
+                            <div class="col-md-12">
+                                User Name
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-md-12">
+                                Email Address
+                                @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.EmailId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-md-12">
+                                Mobile Number
+                                @Html.TextBoxFor(m => m.MobileNumber, new { maxlength = 10, @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.MobileNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-md-12">
+                                Password
+                                @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-md-12">
+                                Confirm Password
+                                @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10" style="margin-left: 120px; padding: 5px;">
+                            <input type="submit" value="Register" class="btn btn-success" />
+                            <input type="submit" value="Reset" class="btn btn-secondary" />
+                        </div>
+                    </div>
+
+                </fieldset>
+            }
+
+            <div>
+
+                <h5 style="color:red">@TempData["Responce"]</h5>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

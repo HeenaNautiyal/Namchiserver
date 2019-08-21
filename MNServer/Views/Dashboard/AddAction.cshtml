@@ -1,0 +1,573 @@
+﻿@model MNServer.Models.ActionTaken
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Birth Certificate</title>
+    <link href="~/Scripts/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <link href="~/Scripts/Test.css" rel="stylesheet" />
+
+    <script src="~/Scripts/CustomeScript.js"></script>
+  
+</head>
+
+<body>
+    @{
+        foreach (var item in Model.Showall)
+        {
+            if( item.BnDType.Equals("BR"))
+            {
+
+                var nationality = item.Nationality.ToString();
+                <div class="text-center form-group Heading">Birth Registration</div>
+                <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
+                    @using (Html.BeginForm())
+                    {
+                        //<input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+
+                        @Html.ValidationSummary(true)
+
+                        <fieldset>
+                            <div class="ValidateLable">
+                                <p>@ViewBag.MyString</p>
+                            </div>
+
+                            @*----------Birth Registration------------*@
+                            <div class="FontStyle">
+
+                               
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+
+                                        <div id="DivDummy" class="col-md-0 "></div>
+                                        <div class="form-group col-md-5">
+
+                                            Name Of Informant<br />
+                                            @Html.DisplayFor(m => item.Name_of_Informant)
+
+                                        </div>
+
+                                        <div id="DivDummy" class="col-md-2 "></div>
+                                        <div class="form-group col-md-5">
+                                            Name Of Child<br />
+                                            @Html.DisplayFor(m => item.Name_of_Child)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+                                        <div id="DivDummy" class="col-md-0 "></div>
+                                        <div class="form-group col-md-5">
+
+                                            Gender Of Child<br />
+                                            @Html.DisplayFor(m => item.Gender_Of_Child)
+                                        </div>
+                                        <div id="DivDummy" class="col-md-2 "></div>
+                                        <div class="form-group col-md-5">
+                                            Name Of Father<br />
+                                            @Html.DisplayFor(m => item.Name_of_Father)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+                                        <div id="DivDummy" class="col-md-0 "></div>
+                                        <div class="form-group col-md-5">
+                                            Name Of Mother<br />
+                                            @Html.DisplayFor(m => item.Name_of_Mother)
+
+
+                                        </div>
+                                        <div id="DivDummy" class="col-md-2 "></div>
+                                        <div class="form-group col-md-5">
+                                            Date Of Birth<br />
+                                            @Html.DisplayFor(m => item.Date_of_Birth)
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+                                        <div id="DivDummy" class="col-md-0 "></div>
+                                        <div class="form-group col-md-5">
+                                            Place Of Birth<br />
+                                            @Html.DisplayFor(m => item.Place_of_Birth)
+                                        </div>
+                                        <div id="DivDummy" class="col-md-2 "></div>
+                                        <div class="form-group col-md-5">
+                                            Address<br />
+                                            @Html.DisplayFor(m => item.Address)
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+                                        <div id="DivDummy" class="col-md-0 "></div>
+                                        <div class="form-group col-md-5">
+                                            Gram Panchayat Unit<br />
+                                            @Html.DisplayFor(m => item.Gram_Panchayat_Unit)
+                                        </div>
+                                        <div id="DivDummy" class="col-md-2 "></div>
+
+
+                                    </div>
+                                </div>
+
+                                @*<div class="form-row">
+                                        <div class="col-md-12 input-group DivMargin  ">
+                                            <div id="DivDummy" class="col-md-0 "></div>
+                                            <div class="form-group col-md-5">
+                                                Files<br />
+                                                @Html.DisplayFor(m => item.DocumentName)
+                                                @Html.ActionLink("View", "DownLoadFile", "Dashboard", new { Id = item.ID }, null)
+                                            </div>
+                                            <div id="DivDummy" class="col-md-2 "></div>
+                                            <div class="form-group col-md-5">
+                                                Nationality<br />
+
+                                                @if (item.Nationality.ToString() == "True")
+                                                {
+                                                    @Html.Label("Indian")
+                                                }
+                                                else
+                                                {
+                                                    @Html.Label("NRI")
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+                                <div id="previewDocumentDialog" title="Preview" style="overflow: hidden;"></div>
+
+                            </div>
+
+                        </fieldset>
+                    }
+                </div>
+           }
+            else
+            {
+            <div class="text-center form-group Heading">Death Registration</div>
+                <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
+                    @using (Html.BeginForm())
+                    {
+                        //<input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+
+                        @Html.ValidationSummary(true)
+
+                        <fieldset>
+                            <div class="ValidateLable">
+                                <p>@ViewBag.MyString</p>
+                            </div>
+
+                            @*----------Birth Registration------------*@
+                            <div class="FontStyle">
+
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+
+                                        <div id="DivDummy" class="col-md-0 "></div>
+                                        <div class="form-group col-md-5">
+
+                                            Name Of Informant<br />
+                                            @Html.DisplayFor(m => item.Name_of_Informant)
+
+                                        </div>
+
+                                        <div id="DivDummy" class="col-md-2 "></div>
+                                        <div class="form-group col-md-5">
+                                            Name Of Deceased<br />
+                                            @Html.DisplayFor(m => item.NameOfBnDperson)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+
+                                        <div class="form-group col-md-5">
+                                            Name Of Father/Husband Of Deceased<br />
+                                            @Html.DisplayFor(m => item.Name_of_Father)
+                                        </div>
+                                        <div id="DivDummy" class="col-md-2 "></div>
+                                        <div class="form-group col-md-5">
+                                            Age of Deceasec<br />
+                                            @Html.DisplayFor(m => item.AgeofDeceased)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+                                        <div id="DivDummy" class="col-md-0 "></div>
+                                        <div class="form-group col-md-5">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+                                        <div id="DivDummy" class="col-md-0 "></div>
+                                        <div class="form-group col-md-5">
+                                            Place Of Death<br />
+                                            @Html.DisplayFor(m => item.PlaceofDeath)
+                                        </div>
+                                        <div id="DivDummy" class="col-md-2 "></div>
+                                        <div class="form-group col-md-5">
+                                            Address<br />
+                                            @Html.DisplayFor(m => item.Address)
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+
+                                        <div class="form-group col-md-5">
+                                            Nationality<br />
+
+                                            @if (item.Nationality.ToString() == "True")
+                                            {
+                                                @Html.Label("Indian")
+                                            }
+                                            else
+                                            {
+                                                @Html.Label("NRI")
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="previewDocumentDialog" title="Preview" style="overflow: hidden;"></div>
+
+                            </div>
+
+                        </fieldset>
+                    }
+                </div>
+ 
+            }
+        }
+    }
+
+    @*----------Display Identity Document------------------*@
+
+    @if (Model.viewIdentityDocument.Count.Equals(0))
+    {
+        <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%; display:none">
+            @*----------Display comments------------------*@
+
+            <Table style="width: 300px; visibility:hidden" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>
+                        Comments
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                    <th>
+                        UserName
+                    </th>
+                    <th>
+                        Datetime
+                    </th>
+                <tr>
+                    @foreach (var item in Model.ShowAllComments)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Comments)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Action)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.DateTime)
+                        </td>
+                    </tr>
+                }
+                </Table>
+            </div>
+        }
+        else
+        {
+            <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%; ">
+                @*----------Display comments------------------*@
+
+                <Table style="width: 300px; " cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>
+                            Document Name
+                        </th>
+                        <th>
+                            Document Type
+                        </th>
+
+                    <tr>
+                        @foreach (var item in Model.viewIdentityDocument)
+                        {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(m => item.Docname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Doctype)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Click here to download",
+                               "DownloadFile_I", "Dashboard", new { DocName = item.Docname, Doctype = item.Doctype }, null)
+                            </td>
+
+                        </tr>
+                    }
+                    </Table>
+                </div>
+            }
+
+    @*----------Display BnD Document------------------*@
+
+    @if (Model.viewBnDDocument.Count.Equals(0))
+    {
+        <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%; display:none">
+            @*----------Display comments------------------*@
+
+            <Table style="width: 300px; visibility:hidden" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>
+                        Comments
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                    <th>
+                        UserName
+                    </th>
+                    <th>
+                        Datetime
+                    </th>
+                <tr>
+                    @foreach (var item in Model.ShowAllComments)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Comments)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Action)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.DateTime)
+                        </td>
+                    </tr>
+                }
+                </Table>
+            </div>
+        }
+        else
+        {
+            <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
+                @*----------Display comments------------------*@
+
+                <Table style="width: 500px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>
+                            Document Name
+                        </th>
+                        <th>
+                            Document Type
+                        </th>
+
+                    <tr>
+                        @foreach (var item in Model.viewBnDDocument)
+                        {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(m => item.Docname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Doctype)
+                            </td>
+
+                            <td>
+                            <td>
+                                @Html.ActionLink("Click here to download",
+                               "DownloadFile_BnD", "Dashboard",new {DocName=item.Docname,Doctype=item.Doctype },null)
+
+                            </td>
+                        </tr>
+                    }
+                    </Table>
+                </div>
+            }
+
+    <div class="FontStyle">
+
+        @*----------------------No Comments in database--------------------------*@
+        @if (Model.ShowAllComments.Count.Equals(0))
+        {
+            <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%; display:none">
+                @*----------Display comments------------------*@
+
+                <Table style="width: 300px; visibility:hidden" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>
+                            Comments
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                        <th>
+                            UserName
+                        </th>
+                        <th>
+                            Datetime
+                        </th>
+                    <tr>
+                        @foreach (var item in Model.ShowAllComments)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.Comments)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Action)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.DateTime)
+                            </td>
+                        </tr>
+                    }
+                    </Table>
+                </div>
+            }
+            @*----------------------Comments history in database--------------------------*@
+            else
+            {
+                <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
+                    @*----------Display comments------------------*@
+
+                    <Table style="width: auto; " cellpadding="6" cellspacing="6">
+                        <tr>
+                            <th>
+                                Comments
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                            <th>
+                                UserName
+                            </th>
+                            <th>
+                                Datetime
+                            </th>
+                        <tr>
+                            @foreach (var item in Model.ShowAllComments)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.Comments)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Action)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Username)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.DateTime)
+                                </td>
+                            </tr>
+                        }
+                        </Table>
+                    </div>
+                }
+
+    </div>
+
+    <div>
+
+        <fieldset>
+            <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;" id="loginModal">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div data-keyboard="false" data-backdrop="static">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Proceed to Verify</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-row">
+                                    <div class="col-md-12 input-group DivMargin  ">
+
+                                        <div id="DivDummy" class="col-md-0 "></div>
+                                        <div class="form-group col-md-8">
+
+                                            Comments<br />
+                                            @Html.TextAreaFor(m => m.Comments, new { @rows = 3, @class = "mycombo" })<br />
+
+
+                                            <br />
+                                            @foreach (var item in Model.Allrecomendedvarification)
+                                            {
+                                                <input type="checkbox" name="ClarificationID's" value="@item.ClarificationOption" id="@item.ID" class="CheckReject" />
+                                                <label for="@item.ClarificationOption">@item.ClarificationOption</label><br />
+                                            }
+
+                                        </div>
+                                        <div id="d1"></div>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary button button4" id="btnPost" disabled>Approve</button>
+                                        <input type="submit" class="btn btn-primary button button4" id="btnReject" disabled value="@(Model.RoleName.Equals("Birth_Approver")? "Reject":"Recommend For Reject")" />
+                                        <button type="submit" class="btn btn-primary button button4" id="btnClarify" disabled>Clarification</button>
+                                        @*<button type="button" id="btnHideModal" class="btn btn-primary button button4">*@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" style="margin-left: 350px; padding: 10px;">
+
+            <input type="submit" value="Proceed To Verify" class="btn btn-success" id="btnShowModal" />
+            <input type="submit" value="Reset" class="btn btn-success" id="btnReset" />
+
+            <input type="button" class="btn-primary" value="Logout" checked="checked" onclick="location.href='@Url.Action("Logout","Dashboard")'">
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+﻿@model MNServer.ProcessAction.Model.BirthProcess
+@{
+    Layout = null;
+
+    var Next =Model.nextAction;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowData</title>
+</head>
+<body>
+    <div>
+        <table>
+
+            <tr>
+
+                <th>
+                    <h3>Name</h3>
+
+                </th>
+
+                <th>
+
+                    <h3>Name of the child</h3>
+
+                </th>
+
+                <th>
+
+                    <h3>Gender</h3>
+
+                </th>
+
+                <th>
+
+                    <h3>DOB</h3>
+
+                </th>
+
+            </tr>
+            @foreach (var item in Model.ShowallBirthRegis)
+
+            {
+                var ID = item.ID;
+                var BnDType = item.BnDType;
+                <tr>
+
+                    <td>
+
+                        @Html.DisplayFor(a => item.Name_of_Informant)
+
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(a => item.Name_of_Child)
+
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(a => item.Gender_Of_Child)
+
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(a => item.Date_of_Birth)
+
+                    </td>
+                    <td>
+                        @if (Next.ToString().Contains("Inspected") && BnDType.Equals("DT"))
+                        {
+                            @Html.ActionLink("Pending Inspection", "ClickAction", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("Inspected") && BnDType.Equals("BR"))
+                        {
+                            @Html.ActionLink("Pending Inspection", "ClickAction", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("Verified") && BnDType.Equals("DT"))
+                        {
+                            @Html.ActionLink("Pending Verification", "ClickAction", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("Verified") && BnDType.Equals("BR"))
+                        {
+                            @Html.ActionLink("Pending Verification", "ClickAction", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("Rejected") || Next.ToString().Contains("Rejection") && BnDType.Equals("DT"))
+                        {
+                            @Html.ActionLink("Pending Rejection", "Clarification", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("Rejected") || Next.ToString().Contains("Rejection") && BnDType.Equals("BR"))
+                        {
+                            @Html.ActionLink("Pending Rejection", "Clarification", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("BirthPay") && BnDType.Equals("DT"))
+                        {
+                            @Html.ActionLink("Pending Payment", "PaymentClickAction", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("BirthPay") && BnDType.Equals("BR"))
+                        {
+                            @Html.ActionLink("Pending Payment", "PaymentClickAction", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("BirthApproval") && BnDType.Equals("DT"))
+                        {
+                            @Html.ActionLink("Pending Approval", "ClickAction", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("BirthApproval") && BnDType.Equals("BR"))
+                        {
+                            @Html.ActionLink("Pending Approval", "ClickAction", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("BirthGiveClarification") && BnDType.Equals("DT"))
+                        {
+                            @Html.ActionLink("Pending Clarification", "Clarification", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                        else if (Next.ToString().Contains("BirthGiveClarification") && BnDType.Equals("BR"))
+                        {
+                            @Html.ActionLink("Pending Clarification", "Clarification", "Dashboard", new { Id = ID, BnDType = BnDType }, null)
+                        }
+                    </td>
+                    <td></td>
+
+                </tr>
+
+            }
+        </table>
+
+        
+    </div>
+</body>
+</html>

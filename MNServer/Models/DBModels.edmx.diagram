@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d9743fae5ad14ca085c924bb1f434a74" Name="Diagram1" ZoomLevel="40">
+        <EntityTypeShape EntityType="DBModel.ProcessMastertoRoleMap" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Action_Master" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tbl_BirthRegistration" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tbl_DeathRegistration" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Login" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Page_Role" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Process_Action_Map" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Process_Master" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Role_Master" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.TblRole_Master" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.TblRoleToActionMap" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.TblUsertoRoleMap" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.tbl_audit" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Birth_Process_Action" Width="1.5" PointX="11.375" PointY="11.75" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Clarification_Master" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="DBModel.tblLogin" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Customer_Master" Width="1.5" PointX="13.375" PointY="3.75" />
+        <EntityTypeShape EntityType="DBModel.Tbl_UserMaster" Width="1.5" PointX="13.375" PointY="12.75" />
+        <EntityTypeShape EntityType="DBModel.Tbl_DocumentsAttachment" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Document_List" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Document_BnD_List" Width="1.5" PointX="3.375" PointY="14.75" />
+        <EntityTypeShape EntityType="DBModel.Tbl_Document_Identity_List" Width="1.5" PointX="15.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,79 @@
+﻿
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Script/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="~/Script/simple-sidebar.css" rel="stylesheet" />
+</head>
+
+<body>
+
+
+
+
+
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a href="~/UP/BirthRegistration#" class="list-group-item list-group-item-action bg-light">Birth Registration</a>
+                <a href="~/UP/DeathRegistration#" class="list-group-item list-group-item-action bg-light">Death Registration</a>
+                <a href="~/UP/GetAllEmployees#" class="list-group-item list-group-item-action bg-light">Get All Birth Registration</a>
+                <a href="~/UP/RegistrationType#" class="list-group-item list-group-item-action bg-light">Profile</a>
+                <a href="~/ShowAllRecords/Index#" class="list-group-item list-group-item-action bg-light">Show All Birth Registration</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                @*<button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>*@
+                <span class="navbar-toggler-icon" id="menu-toggle"></span>
+
+            </nav>
+
+            <div class="container-fluid">
+
+
+
+
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Script/bootstrap-toggle.min.js"></script>
+    <script src="~/Script/jquery-1.12.4.min.js"></script>
+    <!-- Menu Toggle Script -->
+    <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+    </script>
+
+</body>
+
+</html>

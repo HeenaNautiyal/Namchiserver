@@ -1,0 +1,61 @@
+﻿/*body{
+    background-color:#faf5f8;
+}*/
+.Heading /*Applying Bottom Margin And Font Size To(Label) Heading Displayed On Page*/ {
+    text-align: center;
+    color:mediumaquamarine;
+    text-shadow: 0px 0px 1px #101820;
+    font-variant:small-caps;
+    font-size: 1.5rem;
+    font-weight:700;
+    background: #f9ebe7;
+    border-radius: 10px;
+    padding: 10px;
+    
+}
+/*LIGHTNING COLOR OF PLACEHOLDER*/
+::-webkit-input-placeholder { /* Chrome */
+    
+    font-style: italic !important;
+    opacity: 0.45 !important;
+    }
+.marginebottom{
+    padding:10px;
+}
+.radio{
+
+    font-variant:small-caps;
+    font-size: 1rem;
+    /*text-shadow: 0px 0px 1px #101820;*/
+  margin-left:40%;
+  padding:10px;
+}
+
+.FontStyle{
+    font-style:inherit;
+    font-size:18px;
+    font-variant:small-caps;
+   
+}
+.ValidateLable {
+    font: green;
+    font-weight: 500;
+    font-variant-caps: petite-caps;
+    color: forestgreen;
+    font-style: normal;
+}
+.fontsize1 {
+    font-size: 14px;
+}
+
+div.b {
+    font-size: large;
+}
+
+div.c {
+    font-size: 150%;
+}
+
+.mycombo {
+    width: 400px;
+}

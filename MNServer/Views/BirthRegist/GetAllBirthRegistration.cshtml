@@ -1,0 +1,149 @@
+﻿@model MNServer.Models.Tbl_BirthRegistration
+@{
+    ViewBag.Title = "GetAllEmployees";
+}
+
+@model IEnumerable<MNServer.Models.Tbl_BirthRegistration>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Script/bootstrap-toggle.min.js"></script>
+    <link href="~/Script/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Script/bootstrap.min.js"></script>
+
+    <link href="~/Script/Test.css" rel="stylesheet" />
+    <style>
+        #customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 2px;
+            }
+
+            #customers tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #customers tr:hover {
+                background-color: #ddd;
+            }
+
+            #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;
+            }
+    </style>
+
+</head>
+<body>
+
+    <div class="text-center form-group Heading">All Birth Registration</div>
+    <div class="panel panel-body panel-heading col-md-12" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:0%;">
+
+        <table id="customers">
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Name_of_Informant)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name_of_Child)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name_of_Father)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Name_of_Mother)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender_Of_Child)
+                </th>
+
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Date_of_Birth)
+                    </th>*@
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Place_of_Birth)
+                </th>
+
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Gram_Panchayat_Unit)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.DocumentType)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.FileName)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Nationality)
+                    </th>*@
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                @Html.HiddenFor(model => item.ID)
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name_of_Informant)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name_of_Child)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name_of_Father)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name_of_Mother)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender_Of_Child)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Date_of_Birth)
+                        </td>*@
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Place_of_Birth)
+                    </td>
+
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Gram_Panchayat_Unit)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DocumentType)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.DocumentName)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Nationality)
+                        </td>*@
+
+                    <td>
+                        @Html.ActionLink("Edit", "EditEmpDetails", new { id = item.ID }) |
+                    </td>
+                </tr>
+
+            }
+        </table>
+    </div>
+</body>
+</html>

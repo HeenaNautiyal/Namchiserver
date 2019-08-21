@@ -1,0 +1,131 @@
+﻿@model MNServer.ProcessAction.Model.BirthProcess
+@{
+    Layout = null;
+    var viewTemp = @TempData["Viewstr"];
+    var count = @TempData["Count"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard</title>
+</head>
+
+<body>
+
+    <table>
+
+        <tr>
+
+
+            <h3> Birth Process</h3>
+
+
+
+            <th>
+                <h4>Action</h4>
+
+            </th>
+
+            <th>
+                <h4>Count</h4>
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.ShowallBirthRegis)
+        {
+            var Action = item.nextAction.ToString();
+            string[] line = Action.Split('|');
+            var ActionName = line[0].ToString();
+            var BnDType = item.BnDType.ToString();
+
+            var countitem = item.count;
+            <tr>
+
+                <td>
+                    @if (ActionName.Equals("BirthVerified") && BnDType.Equals("BR"))
+                    {
+                        <label for="ActionName">Pending Birth Verifications:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthVerified") && BnDType.Equals("DT"))
+                    {
+                        <label for="ActionName">Pending Death Verifications:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthGiveClarification_V") || ActionName.Equals("BirthGiveClarification_I") || ActionName.Equals("BirthGiveClarification_A") && BnDType.Equals("BR"))
+                    {
+                        <label for="ActionName">Pending Birth Clarification:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthGiveClarification_V") || ActionName.Equals("BirthGiveClarification_I") || ActionName.Equals("BirthGiveClarification_A") && BnDType.Equals("DT"))
+                    {
+                        <label for="ActionName">Pending Death Clarification:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthInspected") && BnDType.Equals("BR"))
+                    {
+                        <label for="ActionName">Pending Birth Inspection:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthInspected") && BnDType.Equals("DT"))
+                    {
+                        <label for="ActionName">Pending Death Inspection:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthGiveRejection_V") && BnDType.Equals("BR"))
+                    {
+                        <label for="ActionName">Pending Birth Recomend for Rejections from Verifier:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthGiveRejection_V") && BnDType.Equals("DT"))
+                    {
+                        <label for="ActionName">Pending Death Recomend for Rejections from Verifier:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthGiveRejection_I") && BnDType.Equals("BR"))
+                    {
+                        <label for="ActionName">Pending Birth Recomend for Rejections from Inspection officer:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthGiveRejection_I") && BnDType.Equals("DT"))
+                    {
+                        <label for="ActionName">Pending Death Recomend for Rejections from Inspection officer:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthApproval"))
+                    {
+                        <label for="ActionName">Pending for Action:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthPay"))
+                    {
+                        <label for="ActionName">Pending for Payment:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthGiveRejection_A") && BnDType.Equals("BR"))
+                    {
+                        <label for="ActionName">Pending for Birth Rejection Clarification:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthGiveRejection_A") && BnDType.Equals("DT"))
+                    {
+                        <label for="ActionName">Pending for Death Rejection Clarification:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("No_Pending_action"))
+                    {
+                        <label for="ActionName">No pending action:&nbsp; </label>
+                    }
+
+                </td>
+                <td>
+                    @if (countitem == 0)
+                    {
+                        @Html.Label("0", null, null);
+                    }
+                    else
+                    {
+                        @Html.ActionLink(countitem.ToString(), "EditPending", "Dashboard", new { id = Action.ToString() ,BnDType=BnDType.ToString()}, null);
+                    }
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+    <input type="button" class="btn-primary" value="Logout" checked="checked" onclick="location.href='@Url.Action("Logout","Dashboard")'">
+
+</body>
+</html>
