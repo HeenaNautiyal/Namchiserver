@@ -87,6 +87,14 @@
                     {
                         <label for="ActionName">Pending Death Recomend for Rejections from Inspection officer:&nbsp; </label>
                     }
+                    else if (ActionName.Equals("BirthRejected") && BnDType.Equals("BR"))
+                    {
+                        <label for="ActionName">Application Rejected:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthRejected") && BnDType.Equals("DT"))
+                    {
+                        <label for="ActionName">Application Rejected:&nbsp; </label>
+                    }
                     else if (ActionName.Equals("BirthApproval"))
                     {
                         <label for="ActionName">Pending for Action:&nbsp; </label>
@@ -107,6 +115,23 @@
                     {
                         <label for="ActionName">No pending action:&nbsp; </label>
                     }
+                    else if (ActionName.Equals("BirthAppealDone") && BnDType.Equals("BR"))
+                    {
+                        <label for="ActionName">Application Appeal to Approver:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthAppealDone") && BnDType.Equals("DT"))
+                    {
+                        <label for="ActionName">Application Appeal to Approver:&nbsp; </label>
+                    }
+
+                    else if (ActionName.Equals("BirthAppealtoApprover") && BnDType.Equals("BR"))
+                    {
+                        <label for="ActionName">Application Rejected:&nbsp; </label>
+                    }
+                    else if (ActionName.Equals("BirthAppealtoApprover") && BnDType.Equals("DT"))
+                    {
+                        <label for="ActionName">Application Rejected:&nbsp; </label>
+                    }
 
                 </td>
                 <td>
@@ -116,7 +141,7 @@
                     }
                     else
                     {
-                        @Html.ActionLink(countitem.ToString(), "EditPending", "Dashboard", new { id = Action.ToString() ,BnDType=BnDType.ToString()}, null);
+                        @Html.ActionLink(countitem.ToString(), "EditPending", "Dashboard", new { id = Action.ToString(), BnDType = BnDType.ToString() }, null);
                     }
                 </td>
 

@@ -112,6 +112,7 @@ namespace MNServer.Controllers.Login
                 int roleids = objDB.LoginDetail(Uobject);
                 if (roleids == 0)
                 {
+                    TempData["Message"] = objDB.getName;
                     return View("AppliedPage");
                 }
                 string Uid = objDB.getId;

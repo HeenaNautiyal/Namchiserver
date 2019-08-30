@@ -10,5 +10,6 @@ namespace MNServer.Models
         public string Action { get; set; }
         public string Comments { get; set; }
         public string ActionSection { get; set; }
+        public string BDType { get; set; }
     }
 }

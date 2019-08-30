@@ -1,8 +1,10 @@
 ﻿using MNServer.ProcessAction.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MNServer.Models
 {
@@ -20,7 +22,9 @@ namespace MNServer.Models
         public string BnDType { get; set; }
         public List<Tbl_Document_Identity_List> viewIdentityDocument { get; set; }
         public List<Tbl_Document_BnD_List> viewBnDDocument { get; set; }
-
+        [NotMapped]
+        public SelectList OptionList { get; set; }
+        public List<AppealDoc> Appdoc { get; set; }
     }
 
 }

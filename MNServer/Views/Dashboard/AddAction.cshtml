@@ -12,14 +12,14 @@
     <link href="~/Scripts/Test.css" rel="stylesheet" />
 
     <script src="~/Scripts/CustomeScript.js"></script>
-  
+
 </head>
 
 <body>
     @{
         foreach (var item in Model.Showall)
         {
-            if( item.BnDType.Equals("BR"))
+            if (item.BnDType.Equals("BR"))
             {
 
                 var nationality = item.Nationality.ToString();
@@ -39,7 +39,7 @@
                             @*----------Birth Registration------------*@
                             <div class="FontStyle">
 
-                               
+
                                 <div class="form-row">
                                     <div class="col-md-12 input-group DivMargin  ">
 
@@ -153,10 +153,10 @@
                         </fieldset>
                     }
                 </div>
-           }
+            }
             else
             {
-            <div class="text-center form-group Heading">Death Registration</div>
+                <div class="text-center form-group Heading">Death Registration</div>
                 <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
                     @using (Html.BeginForm())
                     {
@@ -237,14 +237,11 @@
                                         <div class="form-group col-md-5">
                                             Nationality<br />
 
-                                            @if (item.Nationality.ToString() == "True")
+                                            @if (item.Nationality.ToString() == "False")
                                             {
                                                 @Html.Label("Indian")
                                             }
-                                            else
-                                            {
-                                                @Html.Label("NRI")
-                                            }
+
                                         </div>
                                     </div>
                                 </div>
@@ -256,7 +253,7 @@
                         </fieldset>
                     }
                 </div>
- 
+
             }
         }
     }
@@ -306,7 +303,7 @@
         else
         {
             <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%; ">
-                @*----------Display comments------------------*@
+                @*----------Display File Download------------------*@
 
                 <Table style="width: 300px; " cellpadding="0" cellspacing="0">
                     <tr>
@@ -411,7 +408,7 @@
                             <td>
                             <td>
                                 @Html.ActionLink("Click here to download",
-                               "DownloadFile_BnD", "Dashboard",new {DocName=item.Docname,Doctype=item.Doctype },null)
+                               "DownloadFile_BnD", "Dashboard",new {DocName=item.Docname,Doctype=item.Doctype, folder = Model.Showall[0].BnDType.ToString()},null)
 
                             </td>
                         </tr>
@@ -419,6 +416,78 @@
                     </Table>
                 </div>
             }
+
+    @*----------Display Appeal Document------------------*@
+
+    @if (Model.Appdoc.Count.Equals(0))
+    {
+        <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%; display:none">
+            @*----------Display Appeal comments------------------*@
+
+            <Table style="width: 300px; visibility:hidden" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>
+                        Comments
+                    </th>
+
+                <tr>
+                    @foreach (var item in Model.ShowAllComments)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Comments)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Action)
+                        </td>
+
+                    </tr>
+                }
+                </Table>
+            </div>
+        }
+        else
+        {
+            <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%; ">
+                @*----------Display Appeal comments------------------*@
+
+                <Table style="width: 300px; " cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>
+                            Appeal Comment
+                        </th>
+                        <th>
+                            Appeal Document
+                        </th>
+
+                    <tr>
+                        @foreach (var item in Model.Appdoc)
+                        {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(m => item.AppealComment)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.AppealFileName)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Click here to download",
+                               "DownloadFile_Appeal", "Dashboard", new { DocName = item.AppealFileName, folder = "AP" }, null)
+                            </td>
+
+                        </tr>
+                    }
+                    </Table>
+                </div>
+            }
+
+
+
+
+
+
 
     <div class="FontStyle">
 
@@ -526,6 +595,7 @@
 
                                             Comments<br />
                                             @Html.TextAreaFor(m => m.Comments, new { @rows = 3, @class = "mycombo" })<br />
+                                            @Html.TextBoxFor(m => m.BnDType, new { style = "display: none;" })
 
 
                                             <br />

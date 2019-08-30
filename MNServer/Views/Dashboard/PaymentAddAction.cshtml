@@ -16,259 +16,259 @@
 </head>
 
 <body>
-    @{ 
-            var BnDType = Model.BnDType.ToString();
-            if (BnDType.Equals("BR"))
-            {
-                foreach (var item in Model.Showall)
-                {
-                    var nationality = item.Nationality.ToString();
-            <div class="text-center form-group Heading">Birth Registration</div>
-            <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
-                @using (Html.BeginForm())
+    @{
+    var BnDType = Model.BnDType.ToString();
+    if (BnDType.Equals("BR"))
+    {
+    foreach (var item in Model.Showall)
+    {
+    var nationality = item.Nationality.ToString();
+    <div class="text-center form-group Heading">Birth Registration</div>
+    <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
+        @using (Html.BeginForm())
         {
-            //<input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        //<input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
 
-            @Html.ValidationSummary(true)
+        @Html.ValidationSummary(true)
 
-            <fieldset>
+        <fieldset>
 
-                <div class="ValidateLable">
-                            <p>@ViewBag.MyString</p>
-                        </div>
-
-                        @*----------Birth Registration------------*@
-                        <div class="FontStyle">
-
-                            
-                            <div class="form-row">
-                                <div class="col-md-12 input-group DivMargin  ">
-
-                                    <div id="DivDummy" class="col-md-0 "></div>
-                                    <div class="form-group col-md-5">
-
-                                        Name Of Informant<br />
-                                        @Html.DisplayFor(m => item.Name_of_Informant)
-
-                                    </div>
-
-                                    <div id="DivDummy" class="col-md-2 "></div>
-                                    <div class="form-group col-md-5">
-                                        Name Of Child<br />
-                                        @Html.DisplayFor(m => item.Name_of_Child)
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="col-md-12 input-group DivMargin  ">
-                                    <div id="DivDummy" class="col-md-0 "></div>
-                                    <div class="form-group col-md-5">
-
-                                        Gender Of Child<br />
-                                        @Html.DisplayFor(m => item.Gender_Of_Child)
-                                    </div>
-                                    <div id="DivDummy" class="col-md-2 "></div>
-                                    <div class="form-group col-md-5">
-                                        Name Of Father<br />
-                                        @Html.DisplayFor(m => item.Name_of_Father)
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="col-md-12 input-group DivMargin  ">
-                                    <div id="DivDummy" class="col-md-0 "></div>
-                                    <div class="form-group col-md-5">
-                                        Name Of Mother<br />
-                                        @Html.DisplayFor(m => item.Name_of_Mother)
-
-
-                                    </div>
-                                    <div id="DivDummy" class="col-md-2 "></div>
-                                    <div class="form-group col-md-5">
-                                        Date Of Birth<br />
-                                        @Html.DisplayFor(m => item.Date_of_Birth)
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="col-md-12 input-group DivMargin  ">
-                                    <div id="DivDummy" class="col-md-0 "></div>
-                                    <div class="form-group col-md-5">
-                                        Place Of Birth<br />
-                                        @Html.DisplayFor(m => item.Place_of_Birth)
-                                    </div>
-                                    <div id="DivDummy" class="col-md-2 "></div>
-                                    <div class="form-group col-md-5">
-                                        Address<br />
-                                        @Html.DisplayFor(m => item.Address)
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="col-md-12 input-group DivMargin  ">
-                                    <div id="DivDummy" class="col-md-0 "></div>
-                                    <div class="form-group col-md-5">
-                                        Gram Panchayat Unit<br />
-                                        @Html.DisplayFor(m => item.Gram_Panchayat_Unit)
-                                    </div>
-                                    <div id="DivDummy" class="col-md-2 "></div>
-
-
-                                </div>
-                            </div>
-
-                            @*<div class="form-row">
-                                    <div class="col-md-12 input-group DivMargin  ">
-                                        <div id="DivDummy" class="col-md-0 "></div>
-                                        <div class="form-group col-md-5">
-                                            Files<br />
-                                            @Html.DisplayFor(m => item.DocumentName)
-                                            @Html.ActionLink("View", "DownLoadFile", "Dashboard", new { Id = item.ID }, null)
-                                        </div>
-                                        <div id="DivDummy" class="col-md-2 "></div>
-                                        <div class="form-group col-md-5">
-                                            Nationality<br />
-
-                                            @if (item.Nationality.ToString() == "True")
-                                            {
-                                                @Html.Label("Indian")
-                                            }
-                                            else
-                                            {
-                                                @Html.Label("NRI")
-                                            }
-                                        </div>
-                                    </div>
-                                </div>*@
-
-                            <div id="previewDocumentDialog" title="Preview" style="overflow: hidden;"></div>
-
-                        </div>
-
-                    </fieldset>
-                }
+            <div class="ValidateLable">
+                <p>@ViewBag.MyString</p>
             </div>
-            }
-    }
-        else
-        {
-            foreach (var item in Model.Showall)
-            {
-                var nationality = item.Nationality.ToString();
-                    <div class="text-center form-group Heading">Death Registration</div>
-                    <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
-                        @using (Html.BeginForm())
-                        {
-                            //<input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
 
-                            @Html.ValidationSummary(true)
-
-                            <fieldset>
-                                <div class="ValidateLable">
-                                    <p>@ViewBag.MyString</p>
-                                </div>
-
-                                @*----------Birth Registration------------*@
-                                <div class="FontStyle">
-
-                                    <div class="form-row">
-                                        <div class="col-md-12 input-group DivMargin  ">
-
-                                            <div id="DivDummy" class="col-md-0 "></div>
-                                            <div class="form-group col-md-5">
-
-                                                Name Of Informant<br />
-                                                @Html.DisplayFor(m => item.Name_of_Informant)
-
-                                            </div>
-
-                                            <div id="DivDummy" class="col-md-2 "></div>
-                                            <div class="form-group col-md-5">
-                                                Name Of Deceased<br />
-                                                @Html.DisplayFor(m => item.NameOfBnDperson)
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="col-md-12 input-group DivMargin  ">
-
-                                            <div class="form-group col-md-5">
-                                                Name Of Father/Husband Of Deceased<br />
-                                                @Html.DisplayFor(m => item.Name_of_Father)
-                                            </div>
-                                            <div id="DivDummy" class="col-md-2 "></div>
-                                            <div class="form-group col-md-5">
-                                                Age of Deceasec<br />
-                                                @Html.DisplayFor(m => item.AgeofDeceased)
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="col-md-12 input-group DivMargin  ">
-                                            <div id="DivDummy" class="col-md-0 "></div>
-                                            <div class="form-group col-md-5">
+            @*----------Birth Registration------------*@
+            <div class="FontStyle">
 
 
-                                            </div>
-                                        </div>
-                                    </div>
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
 
-                                    <div class="form-row">
-                                        <div class="col-md-12 input-group DivMargin  ">
-                                            <div id="DivDummy" class="col-md-0 "></div>
-                                            <div class="form-group col-md-5">
-                                                Place Of Death<br />
-                                                @Html.DisplayFor(m => item.PlaceofDeath)
-                                            </div>
-                                            <div id="DivDummy" class="col-md-2 "></div>
-                                            <div class="form-group col-md-5">
-                                                Address<br />
-                                                @Html.DisplayFor(m => item.Address)
-                                            </div>
+                        <div id="DivDummy" class="col-md-0 "></div>
+                        <div class="form-group col-md-5">
 
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12 input-group DivMargin  ">
+                            Name Of Informant<br />
+                            @Html.DisplayFor(m => item.Name_of_Informant)
 
-                                            <div class="form-group col-md-5">
-                                                Nationality<br />
+                        </div>
 
-                                                @if (item.Nationality.ToString() == "True")
-                                                {
-                                                    @Html.Label("Indian")
-                                                }
-                                                else
-                                                {
-                                                    @Html.Label("NRI")
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="previewDocumentDialog" title="Preview" style="overflow: hidden;"></div>
-
-                                </div>
-
-                            </fieldset>
-                        }
+                        <div id="DivDummy" class="col-md-2 "></div>
+                        <div class="form-group col-md-5">
+                            Name Of Child<br />
+                            @Html.DisplayFor(m => item.Name_of_Child)
+                        </div>
                     </div>
-                }
-            }
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+                        <div id="DivDummy" class="col-md-0 "></div>
+                        <div class="form-group col-md-5">
+
+                            Gender Of Child<br />
+                            @Html.DisplayFor(m => item.Gender_Of_Child)
+                        </div>
+                        <div id="DivDummy" class="col-md-2 "></div>
+                        <div class="form-group col-md-5">
+                            Name Of Father<br />
+                            @Html.DisplayFor(m => item.Name_of_Father)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+                        <div id="DivDummy" class="col-md-0 "></div>
+                        <div class="form-group col-md-5">
+                            Name Of Mother<br />
+                            @Html.DisplayFor(m => item.Name_of_Mother)
+
+
+                        </div>
+                        <div id="DivDummy" class="col-md-2 "></div>
+                        <div class="form-group col-md-5">
+                            Date Of Birth<br />
+                            @Html.DisplayFor(m => item.Date_of_Birth)
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+                        <div id="DivDummy" class="col-md-0 "></div>
+                        <div class="form-group col-md-5">
+                            Place Of Birth<br />
+                            @Html.DisplayFor(m => item.Place_of_Birth)
+                        </div>
+                        <div id="DivDummy" class="col-md-2 "></div>
+                        <div class="form-group col-md-5">
+                            Address<br />
+                            @Html.DisplayFor(m => item.Address)
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+                        <div id="DivDummy" class="col-md-0 "></div>
+                        <div class="form-group col-md-5">
+                            Gram Panchayat Unit<br />
+                            @Html.DisplayFor(m => item.Gram_Panchayat_Unit)
+                        </div>
+                        <div id="DivDummy" class="col-md-2 "></div>
+
+
+                    </div>
+                </div>
+
+                @*<div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+                        <div id="DivDummy" class="col-md-0 "></div>
+                        <div class="form-group col-md-5">
+                            Files<br />
+                            @Html.DisplayFor(m => item.DocumentName)
+                            @Html.ActionLink("View", "DownLoadFile", "Dashboard", new { Id = item.ID }, null)
+                        </div>
+                        <div id="DivDummy" class="col-md-2 "></div>
+                        <div class="form-group col-md-5">
+                            Nationality<br />
+
+                            @if (item.Nationality.ToString() == "True")
+                            {
+                            @Html.Label("Indian")
+                            }
+                            else
+                            {
+                            @Html.Label("NRI")
+                            }
+                        </div>
+                    </div>
+                </div>*@
+
+                <div id="previewDocumentDialog" title="Preview" style="overflow: hidden;"></div>
+
+            </div>
+
+        </fieldset>
         }
-    
+    </div>
+    }
+    }
+    else
+    {
+    foreach (var item in Model.Showall)
+    {
+    var nationality = item.Nationality.ToString();
+    <div class="text-center form-group Heading">Death Registration</div>
+    <div class="panel panel-body panel-heading col-md-8" style=" border: 2px groove #ddd !important; border-radius: 7px;margin-left:17%;">
+        @using (Html.BeginForm())
+        {
+        //<input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="ValidateLable">
+                <p>@ViewBag.MyString</p>
+            </div>
+
+            @*----------Birth Registration------------*@
+            <div class="FontStyle">
+
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+
+                        <div id="DivDummy" class="col-md-0 "></div>
+                        <div class="form-group col-md-5">
+
+                            Name Of Informant<br />
+                            @Html.DisplayFor(m => item.Name_of_Informant)
+
+                        </div>
+
+                        <div id="DivDummy" class="col-md-2 "></div>
+                        <div class="form-group col-md-5">
+                            Name Of Deceased<br />
+                            @Html.DisplayFor(m => item.NameOfBnDperson)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+
+                        <div class="form-group col-md-5">
+                            Name Of Father/Husband Of Deceased<br />
+                            @Html.DisplayFor(m => item.Name_of_Father)
+                        </div>
+                        <div id="DivDummy" class="col-md-2 "></div>
+                        <div class="form-group col-md-5">
+                            Age of Deceasec<br />
+                            @Html.DisplayFor(m => item.AgeofDeceased)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+                        <div id="DivDummy" class="col-md-0 "></div>
+                        <div class="form-group col-md-5">
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+                        <div id="DivDummy" class="col-md-0 "></div>
+                        <div class="form-group col-md-5">
+                            Place Of Death<br />
+                            @Html.DisplayFor(m => item.PlaceofDeath)
+                        </div>
+                        <div id="DivDummy" class="col-md-2 "></div>
+                        <div class="form-group col-md-5">
+                            Address<br />
+                            @Html.DisplayFor(m => item.Address)
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12 input-group DivMargin  ">
+
+                        <div class="form-group col-md-5">
+                            Nationality<br />
+
+                            @if (item.Nationality.ToString() == "True")
+                            {
+                            @Html.Label("Indian")
+                            }
+                            else
+                            {
+                            @Html.Label("NRI")
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div id="previewDocumentDialog" title="Preview" style="overflow: hidden;"></div>
+
+            </div>
+
+        </fieldset>
+        }
+    </div>
+    }
+    }
+    }
+
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10" style="margin-left: 350px; padding: 10px;">
-            <input type="button" value="Pay" onclick="location.href='@Url.Action("AddPayment", "Dashboard",new {DType= BnDType}) '" />
+            <input type="button" value="Pay" onclick="location.href='@Url.Action(" AddPayment", "Dashboard" ,new {DType=BnDType}) '"  />
             @*<input type="submit" value="Pay" class="btn btn-success" id="btnPay" />*@
             <input type="submit" value="Reset  " class="btn btn-primary" />
         </div>

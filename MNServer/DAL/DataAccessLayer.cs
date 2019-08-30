@@ -74,7 +74,8 @@ namespace MNServer.Controllers.Login
                     //List<RoleDesc> errorlog = new List<RoleDesc>();
                     RoleDesc rp = new RoleDesc();
                     rp.id = 001;
-                    sessionrole=0;
+                    getName = result;
+                    sessionrole =0;
                     //return errorlog;
                 }
             }

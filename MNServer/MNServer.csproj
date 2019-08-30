@@ -148,6 +148,7 @@
     </Compile>
     <Compile Include="ImageConverter\ImageConverter.cs" />
     <Compile Include="Models\ActionTaken.cs" />
+    <Compile Include="Models\AppealDoc.cs" />
     <Compile Include="Models\ClarificationModelList.cs" />
     <Compile Include="Models\CustomerMaster_TBl.cs" />
     <Compile Include="Models\DBModels.Context.cs">
@@ -204,6 +205,9 @@
       <DependentUpon>DBModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_PendingAction_Selection_Result.cs">
+      <DependentUpon>DBModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_ViewBndDocuments_1_Result.cs">
       <DependentUpon>DBModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblLogin.cs">
@@ -376,6 +380,7 @@
     <Content Include="Views\Dashboard\VerifyPopUp.cshtml" />
     <Content Include="Views\Dashboard\ViewDocument.cshtml" />
     <Content Include="Views\Dashboard\Clarification.cshtml" />
+    <Content Include="Views\Dashboard\Rejection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

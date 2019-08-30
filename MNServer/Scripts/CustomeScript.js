@@ -1,5 +1,4 @@
-﻿//Date of Death
-$(function () {
+﻿$(function () {
     var dtToday = new Date();
     var month = ("0" + dtToday.getMonth() + 1).slice(-2);
     var day = ("0" + dtToday.getDate()).slice(-2);
@@ -44,7 +43,7 @@ $(function () {
         //    dataType: "html",
         //    success: function (response) {
         //        if (response != null) {
-                     
+
         //        }
         //        else {
         //            // alert("Something went wrong");
@@ -77,7 +76,7 @@ $(function () {
 
         $("#btnShowModal").show("slow");
         $("#loginModal").hide();
-      
+
     });
 })
 
@@ -115,10 +114,10 @@ $(document).ready(function () {
                 localStorage.setItem("someVarKey", someVarName);
             }
         }
-    
+
     });
- });
-       
+});
+
 window.onload = function () {
     document.getElementById("loginModal").style.display = 'none';
 }
@@ -165,10 +164,10 @@ $(function () {
 $(function () {
     $("#btnReject").click(function () {
         var Reject = [];
-      
+
         var Commentsection = $("#Comments").val();
         $.each($('input[type = "checkbox"]:checked'), function () {
-             Reject.push($(this).val());
+            Reject.push($(this).val());
         });
         if (Reject.length <= 0) {
             alert("Please select at least one option")
@@ -176,12 +175,12 @@ $(function () {
         else if (Commentsection == null) { alert(" Please enter your comments in the space provided below:") }
 
         else {
-        var RejectRecommend = new Object();
+            var RejectRecommend = new Object();
             RejectRecommend.Action = Reject.toString();
             RejectRecommend.Comments = Commentsection;
             RejectRecommend.ActionSection = "RecommendRejection";
-       
-        if (RejectRecommend != null) {
+
+            if (RejectRecommend != null) {
                 $.ajax({
                     type: "POST",
                     url: "/Dashboard/AjaxRecomendRejectCall",
@@ -204,13 +203,14 @@ $(function () {
                         alert(response.responseText);
                     }
                 });
-            } 
+            }
         }
     });
 })
 
 //For Clarification Action
 $(function () {
+   // debugger;
     $("#btnClarify").click(function () {
 
         var Reject = [];

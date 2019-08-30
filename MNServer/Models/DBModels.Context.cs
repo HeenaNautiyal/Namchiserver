@@ -546,11 +546,11 @@ namespace MNServer.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Tbl_BirthRegistration_SP", name_of_InformantParameter, name_of_ChildParameter, gender_of_ChildParameter, name_of_FatherParameter, name_of_MotherParameter, date_of_BirthParameter, place_of_BirthParameter, addressParameter, gram_Panchayat_UnitParameter, nationalityParameter, nextActionParameter, documentTypeParameter, fileNameParameter, documentNameParameter, passportNoParameter, fileContentParameter, userIDParameter, modifyDateParameter, statusParameter, isActiveParameter, custidParameter, bnDTypeParameter, ageofDeceasedParameter, nameofBnDPersonParameter, date_of_DeathParameter, placeofDeathParameter, msg);
         }
     
-        public virtual ObjectResult<string> Tbl_BirthRegistration_Update_SP(Nullable<int> iD, string name_of_Informant, string name_of_Child, string gender_of_Child, string name_of_Father, string name_of_Mother, Nullable<System.DateTime> date_of_Birth, string place_of_Birth, string address, string gram_Panchayat_Unit, Nullable<bool> nationality, string city_name, string documentType, string fileName, string documentName, string passportNo, string fileContent, string userID, Nullable<System.DateTime> createdOn, Nullable<System.DateTime> modifyDate, string status, ObjectParameter msg)
+        public virtual ObjectResult<string> Tbl_BirthRegistration_Update_SP(string b_ID, string name_of_Informant, string name_of_Child, string gender_of_Child, string name_of_Father, string name_of_Mother, Nullable<System.DateTime> date_of_Birth, string place_of_Birth, string address, string gram_Panchayat_Unit, Nullable<bool> nationality, string nextAction, string documentType, string fileName, string documentName, string passportNo, string fileContent, string userID, Nullable<System.DateTime> modifyDate, string status, Nullable<bool> isActive, Nullable<int> custid, string bnDType, Nullable<int> ageofDeceased, string nameofBnDPerson, Nullable<System.DateTime> date_of_Death, string placeofDeath, ObjectParameter msg)
         {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(int));
+            var b_IDParameter = b_ID != null ?
+                new ObjectParameter("B_ID", b_ID) :
+                new ObjectParameter("B_ID", typeof(string));
     
             var name_of_InformantParameter = name_of_Informant != null ?
                 new ObjectParameter("Name_of_Informant", name_of_Informant) :
@@ -592,9 +592,9 @@ namespace MNServer.Models
                 new ObjectParameter("Nationality", nationality) :
                 new ObjectParameter("Nationality", typeof(bool));
     
-            var city_nameParameter = city_name != null ?
-                new ObjectParameter("City_name", city_name) :
-                new ObjectParameter("City_name", typeof(string));
+            var nextActionParameter = nextAction != null ?
+                new ObjectParameter("NextAction", nextAction) :
+                new ObjectParameter("NextAction", typeof(string));
     
             var documentTypeParameter = documentType != null ?
                 new ObjectParameter("DocumentType", documentType) :
@@ -620,10 +620,6 @@ namespace MNServer.Models
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(string));
     
-            var createdOnParameter = createdOn.HasValue ?
-                new ObjectParameter("CreatedOn", createdOn) :
-                new ObjectParameter("CreatedOn", typeof(System.DateTime));
-    
             var modifyDateParameter = modifyDate.HasValue ?
                 new ObjectParameter("ModifyDate", modifyDate) :
                 new ObjectParameter("ModifyDate", typeof(System.DateTime));
@@ -632,7 +628,35 @@ namespace MNServer.Models
                 new ObjectParameter("Status", status) :
                 new ObjectParameter("Status", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Tbl_BirthRegistration_Update_SP", iDParameter, name_of_InformantParameter, name_of_ChildParameter, gender_of_ChildParameter, name_of_FatherParameter, name_of_MotherParameter, date_of_BirthParameter, place_of_BirthParameter, addressParameter, gram_Panchayat_UnitParameter, nationalityParameter, city_nameParameter, documentTypeParameter, fileNameParameter, documentNameParameter, passportNoParameter, fileContentParameter, userIDParameter, createdOnParameter, modifyDateParameter, statusParameter, msg);
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(bool));
+    
+            var custidParameter = custid.HasValue ?
+                new ObjectParameter("Custid", custid) :
+                new ObjectParameter("Custid", typeof(int));
+    
+            var bnDTypeParameter = bnDType != null ?
+                new ObjectParameter("BnDType", bnDType) :
+                new ObjectParameter("BnDType", typeof(string));
+    
+            var ageofDeceasedParameter = ageofDeceased.HasValue ?
+                new ObjectParameter("AgeofDeceased", ageofDeceased) :
+                new ObjectParameter("AgeofDeceased", typeof(int));
+    
+            var nameofBnDPersonParameter = nameofBnDPerson != null ?
+                new ObjectParameter("NameofBnDPerson", nameofBnDPerson) :
+                new ObjectParameter("NameofBnDPerson", typeof(string));
+    
+            var date_of_DeathParameter = date_of_Death.HasValue ?
+                new ObjectParameter("Date_of_Death", date_of_Death) :
+                new ObjectParameter("Date_of_Death", typeof(System.DateTime));
+    
+            var placeofDeathParameter = placeofDeath != null ?
+                new ObjectParameter("PlaceofDeath", placeofDeath) :
+                new ObjectParameter("PlaceofDeath", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Tbl_BirthRegistration_Update_SP", b_IDParameter, name_of_InformantParameter, name_of_ChildParameter, gender_of_ChildParameter, name_of_FatherParameter, name_of_MotherParameter, date_of_BirthParameter, place_of_BirthParameter, addressParameter, gram_Panchayat_UnitParameter, nationalityParameter, nextActionParameter, documentTypeParameter, fileNameParameter, documentNameParameter, passportNoParameter, fileContentParameter, userIDParameter, modifyDateParameter, statusParameter, isActiveParameter, custidParameter, bnDTypeParameter, ageofDeceasedParameter, nameofBnDPersonParameter, date_of_DeathParameter, placeofDeathParameter, msg);
         }
     
         public virtual ObjectResult<string> Tbl_DeathRegistration_SP(string name_of_Informant, string name_of_Deceased_Person, string gender_Of_Deceased_Person, string name_of_Deceased_FatherHusband, Nullable<System.DateTime> date_Of_Death, string place_Of_Death, string age_Of_Deceased, string address, string gram_Panchayat_Unit, Nullable<bool> nationality, string documentType, string documentName, string documentBytes, string userID, Nullable<System.DateTime> createdOn, Nullable<System.DateTime> modifyDate, ObjectParameter msg)
@@ -704,13 +728,17 @@ namespace MNServer.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Tbl_DeathRegistration_SP", name_of_InformantParameter, name_of_Deceased_PersonParameter, gender_Of_Deceased_PersonParameter, name_of_Deceased_FatherHusbandParameter, date_Of_DeathParameter, place_Of_DeathParameter, age_Of_DeceasedParameter, addressParameter, gram_Panchayat_UnitParameter, nationalityParameter, documentTypeParameter, documentNameParameter, documentBytesParameter, userIDParameter, createdOnParameter, modifyDateParameter, msg);
         }
     
-        public virtual ObjectResult<Tbl_GetBirthRegistration_SP_Result> Tbl_GetBirthRegistration_SP(string nextAction)
+        public virtual ObjectResult<Tbl_GetBirthRegistration_SP_Result> Tbl_GetBirthRegistration_SP(string nextAction, string bnDType)
         {
             var nextActionParameter = nextAction != null ?
                 new ObjectParameter("nextAction", nextAction) :
                 new ObjectParameter("nextAction", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Tbl_GetBirthRegistration_SP_Result>("Tbl_GetBirthRegistration_SP", nextActionParameter);
+            var bnDTypeParameter = bnDType != null ?
+                new ObjectParameter("BnDType", bnDType) :
+                new ObjectParameter("BnDType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Tbl_GetBirthRegistration_SP_Result>("Tbl_GetBirthRegistration_SP", nextActionParameter, bnDTypeParameter);
         }
     
         public virtual ObjectResult<SP_GetDetailofSingleUser_Result> SP_GetDetailofSingleUser(Nullable<int> bR_ID)
@@ -899,6 +927,44 @@ namespace MNServer.Models
                 new ObjectParameter("ActionN", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Mail_Content_Result>("SP_Mail_Content", actionNParameter);
+        }
+    
+        public virtual ObjectResult<SP_ViewBndDocuments_1_Result> SP_ViewBndDocuments_1(string bR_ID)
+        {
+            var bR_IDParameter = bR_ID != null ?
+                new ObjectParameter("BR_ID", bR_ID) :
+                new ObjectParameter("BR_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ViewBndDocuments_1_Result>("SP_ViewBndDocuments_1", bR_IDParameter);
+        }
+    
+        public virtual int SP_UpdateDocumentList_1(string bR_ID, string docname, string doctype, string docFilePath, Nullable<bool> isActive, Nullable<int> custid, ObjectParameter msg)
+        {
+            var bR_IDParameter = bR_ID != null ?
+                new ObjectParameter("BR_ID", bR_ID) :
+                new ObjectParameter("BR_ID", typeof(string));
+    
+            var docnameParameter = docname != null ?
+                new ObjectParameter("Docname", docname) :
+                new ObjectParameter("Docname", typeof(string));
+    
+            var doctypeParameter = doctype != null ?
+                new ObjectParameter("Doctype", doctype) :
+                new ObjectParameter("Doctype", typeof(string));
+    
+            var docFilePathParameter = docFilePath != null ?
+                new ObjectParameter("DocFilePath", docFilePath) :
+                new ObjectParameter("DocFilePath", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(bool));
+    
+            var custidParameter = custid.HasValue ?
+                new ObjectParameter("Custid", custid) :
+                new ObjectParameter("Custid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UpdateDocumentList_1", bR_IDParameter, docnameParameter, doctypeParameter, docFilePathParameter, isActiveParameter, custidParameter, msg);
         }
     }
 }

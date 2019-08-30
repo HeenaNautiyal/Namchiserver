@@ -16,7 +16,7 @@ namespace MNServer.ProcessAction.Action
         string create(Model.IProcess process,int Id,int custid,string Type);
         #endregion
         #region Edit 
-        string edit();
+        string edit(Model.IProcess process, int Id, int custid, string Type);
         #endregion
         #region delete 
         string delete();

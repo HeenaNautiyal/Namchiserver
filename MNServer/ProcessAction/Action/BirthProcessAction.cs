@@ -39,9 +39,9 @@ namespace MNServer.ProcessAction.Action
 
                 
                     bRobject.Status = "BirthApplied";
-                    cmd.Parameters.AddWithValue("@Name_of_Child", checkAndGetValue( bRobject.Name_of_Child));
+                    cmd.Parameters.AddWithValue("@Name_of_Child",checkAndGetValue( bRobject.Name_of_Child));
 
-                    cmd.Parameters.AddWithValue("@Gender_Of_Child", checkAndGetValue(bRobject.Gender_Of_Child));
+                    cmd.Parameters.AddWithValue("@Gender_Of_Child",checkAndGetValue(bRobject.Gender_Of_Child));
                     cmd.Parameters.AddWithValue("@Name_of_Mother", checkAndGetValue( bRobject.Name_of_Mother));
 
                     cmd.Parameters.AddWithValue("@Date_of_Birth", checkAndGetDate(bRobject.Date_of_Birth));
@@ -68,7 +68,7 @@ namespace MNServer.ProcessAction.Action
                
                 
                 cmd.Parameters.AddWithValue("@FileName","");
-                cmd.Parameters.AddWithValue("@DocumentName","ABC");
+                cmd.Parameters.AddWithValue("@DocumentName","");
                 cmd.Parameters.AddWithValue("@DocumentType", checkAndGetValue(bRobject.DocumentType));
                 cmd.Parameters.AddWithValue("@PassportNo", "");
 
@@ -283,7 +283,7 @@ namespace MNServer.ProcessAction.Action
                 con.Open();
 
                 cmd.CommandType = CommandType.StoredProcedure;
-               
+      
                 result = cmd.ExecuteScalar().ToString();
                 if (result.Equals(null))
                 {
@@ -305,6 +305,61 @@ namespace MNServer.ProcessAction.Action
                     DocViewBnDAttachment.Doctype = ds.Tables[0].Rows[i]["Doctype"].ToString();
                     DocViewBnDAttachment.DocFilePath = ds.Tables[0].Rows[i]["DocFilePath"].ToString();
                  
+
+                    Tbl_DocumentViewList.Add(DocViewBnDAttachment);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+
+            finally
+            {
+                con.Close();
+            }
+
+
+            return Tbl_DocumentViewList;
+        }
+
+        public List<Tbl_Document_BnD_List> ShowBnDDocumentList_1(string BR_ID)
+        {
+            List<Tbl_Document_BnD_List> Tbl_DocumentViewList = new List<Tbl_Document_BnD_List>();
+            ActionTaken RoleAccess = new ActionTaken();
+            try
+            {
+                con = Utility.Util.Connection("DBEntities");
+                string result = "";
+                SqlCommand cmd = new SqlCommand("SP_ViewBndDocuments_1", con);
+                con.Open();
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@B_ID", BR_ID);
+
+                result = cmd.ExecuteScalar().ToString();
+                if (result.Equals(null))
+                {
+                    return null;
+                }
+                SqlDataAdapter da = new SqlDataAdapter();
+
+                da.SelectCommand = cmd;
+                DataSet ds = new DataSet();
+
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    Tbl_Document_BnD_List DocViewBnDAttachment = new Tbl_Document_BnD_List();
+                    DocViewBnDAttachment.ID = Convert.ToInt32(ds.Tables[0].Rows[i]["Id"]);
+
+                    DocViewBnDAttachment.Docname = ds.Tables[0].Rows[i]["Docname"].ToString();
+                    DocViewBnDAttachment.Doctype = ds.Tables[0].Rows[i]["Doctype"].ToString();
+                    DocViewBnDAttachment.DocFilePath = ds.Tables[0].Rows[i]["DocFilePath"].ToString();
+
 
                     Tbl_DocumentViewList.Add(DocViewBnDAttachment);
                 }
@@ -349,6 +404,38 @@ namespace MNServer.ProcessAction.Action
             catch (Exception ex)
             {
                 ex.StackTrace.ToString();}
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public string UpdateDocumentAttachment(string bR_ID, string fileName, string docFilePath, string Doctype, bool? isActive, int custid)
+        {
+            con = Utility.Util.Connection("DBEntities");
+            string result = "";
+            string Name = "";
+            List<CustomerMaster_TBl> CMList = new List<CustomerMaster_TBl>();
+            try
+            {
+                //#region Birthregistration
+                SqlCommand cmd = new SqlCommand("SP_UpdateDocumentList_1", con);
+                con.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@BR_ID", bR_ID);
+                cmd.Parameters.AddWithValue("@Docname", fileName);
+                cmd.Parameters.AddWithValue("@Doctype", Doctype);
+                cmd.Parameters.AddWithValue("@DocFilePath", docFilePath);
+                cmd.Parameters.AddWithValue("@IsActive", isActive);
+                cmd.Parameters.AddWithValue("@Custid", custid);
+                cmd.Parameters.AddWithValue("@Msg", "");
+                result = cmd.ExecuteNonQuery().ToString();
+            }
+            catch (Exception ex)
+            {
+                ex.StackTrace.ToString();
+            }
             finally
             {
                 con.Close();
@@ -449,6 +536,37 @@ namespace MNServer.ProcessAction.Action
                 con.Close();
             }
             return Address;
+        }
+
+        public string InsertAppealDocAtt(string bR_ID, string fileName, string docFilePath, bool? isActive, string messageappeal)
+        {
+            con = Utility.Util.Connection("DBEntities");
+            string result = "";
+            string Name = "";
+            List<CustomerMaster_TBl> CMList = new List<CustomerMaster_TBl>();
+            try
+            {
+                //#region Birthregistration
+                SqlCommand cmd = new SqlCommand("SP_InsertAppealDocList", con);
+                con.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@BR_ID", bR_ID);
+                cmd.Parameters.AddWithValue("@Docname", fileName);
+                cmd.Parameters.AddWithValue("@DocFilePath", docFilePath);
+                cmd.Parameters.AddWithValue("@IsActive", isActive);
+                cmd.Parameters.AddWithValue("@AppealComments", messageappeal);
+                cmd.Parameters.AddWithValue("@Msg", "");
+                result = cmd.ExecuteNonQuery().ToString();
+            }
+            catch (Exception ex)
+            {
+                ex.StackTrace.ToString();
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
         }
 
         public string CustomerGender(int cust_ID)
@@ -628,7 +746,7 @@ namespace MNServer.ProcessAction.Action
                 cmd.Parameters.AddWithValue("@UID", U_ID);
                 cmd.Parameters.AddWithValue("@Msg", "");
                 InsertedResult = cmd.ExecuteScalar().ToString();
-             
+
             }
             catch (Exception ex)
             {
@@ -646,9 +764,102 @@ namespace MNServer.ProcessAction.Action
             throw new NotImplementedException();
         }
 
-        public string edit()
+        public string edit(IProcess bRobject1, int P_Id, int custid, string BnDType)
         {
-            throw new NotImplementedException();
+            bRobject = (BirthProcess)bRobject1;
+            //bRobject.processID = P_Id;
+            ProcessActionseq(P_Id);
+
+
+            con = Utility.Util.Connection("DBEntities");
+            string result = "";
+            string result2 = "";
+
+            string pageName = "Birth Registration";
+            try
+            {
+                #region Birthregistration
+                SqlCommand cmd = new SqlCommand("Tbl_BirthRegistration_Update_SP", con);
+                con.Open();
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                bRobject.Status = "BirthApplied";
+                cmd.Parameters.AddWithValue("@B_ID", checkAndGetValue( (bRobject.ID).ToString() ));
+                cmd.Parameters.AddWithValue("@Name_of_Child", checkAndGetValue(bRobject.Name_of_Child));
+
+
+                cmd.Parameters.AddWithValue("@Gender_Of_Child", checkAndGetValue(bRobject.Gender_Of_Child));
+                cmd.Parameters.AddWithValue("@Name_of_Mother", checkAndGetValue(bRobject.Name_of_Mother));
+
+                cmd.Parameters.AddWithValue("@Date_of_Birth", checkAndGetDate(bRobject.Date_of_Birth));
+                cmd.Parameters.AddWithValue("@Place_of_Birth", checkAndGetValue(bRobject.Place_of_Birth));
+                cmd.Parameters.AddWithValue("@Gram_Panchayat_Unit", checkAndGetValue(bRobject.Gram_Panchayat_Unit));
+                cmd.Parameters.AddWithValue("@Nationality", checkAndGetValue(bRobject.Nationality));
+
+
+
+                cmd.Parameters.AddWithValue("@NameofBnDPerson", checkAndGetValue(bRobject.NameOfBnDperson));
+
+                cmd.Parameters.AddWithValue("@Date_of_Death", checkAndGetDate(bRobject.Date_of_Birth));
+
+
+                cmd.Parameters.AddWithValue("@PlaceofDeath", checkAndGetValue(bRobject.PlaceofDeath));
+                cmd.Parameters.AddWithValue("@AgeofDeceased", checkAndGetValue(bRobject.AgeofDeceased));
+
+
+
+                cmd.Parameters.AddWithValue("@Name_of_Father", checkAndGetValue(bRobject.Name_of_Father));
+                cmd.Parameters.AddWithValue("@Name_of_Informant", checkAndGetValue(bRobject.CustomerName));
+
+                cmd.Parameters.AddWithValue("@Address", checkAndGetValue(bRobject.CustomerAddress));
+
+
+                cmd.Parameters.AddWithValue("@FileName", "");
+                cmd.Parameters.AddWithValue("@DocumentName", "");
+                cmd.Parameters.AddWithValue("@DocumentType", checkAndGetValue(bRobject.DocumentType));
+                cmd.Parameters.AddWithValue("@PassportNo", "");
+
+                cmd.Parameters.AddWithValue("@FileContent", "");
+                cmd.Parameters.AddWithValue("@UserID", "");
+                cmd.Parameters.AddWithValue("@ModifyDate", "");
+                cmd.Parameters.AddWithValue("@Status", checkAndGetValue(bRobject.Status));
+                cmd.Parameters.AddWithValue("@NextAction", bRobject.nextAction);
+
+                cmd.Parameters.AddWithValue("@IsActive", 1);
+                cmd.Parameters.AddWithValue("@Custid", custid);
+                cmd.Parameters.AddWithValue("@BnDType", checkAndGetValue(bRobject.BnDType));
+
+                cmd.Parameters.AddWithValue("@Msg", "");
+
+                result = cmd.ExecuteScalar().ToString();
+                string[] lines = result.Split('|');
+                authvalue = lines[0].Contains("Registered Successfully") ? 1 : 0;
+
+                int BirthID = Convert.ToInt16(lines[1]);
+
+                #endregion
+
+
+
+                #region AuditTable
+                result2 = AuditData.AduitFile.FillAudit(pageName, bRobject.CustomerName, authvalue);
+
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ex.StackTrace.ToString();
+
+                return result;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         public SortedDictionary<int, string> ProcessActionseq(int pId)
@@ -721,8 +932,8 @@ namespace MNServer.ProcessAction.Action
                 try
                 {
                     con = Utility.Util.Connection("DBEntities");
-                    //SqlCommand cmd = new SqlCommand("SP_PendingAction_Selection", con);
-                    SqlCommand cmd = new SqlCommand("SP_look", con);
+                    SqlCommand cmd = new SqlCommand("SP_PendingAction_Selection", con);
+                    //SqlCommand cmd = new SqlCommand("SP_look", con);
                     con.Open();
 
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -808,16 +1019,17 @@ namespace MNServer.ProcessAction.Action
         {
             DataSet ds = new DataSet();
             List<Tbl_Clarification_Master> RecomVerifyList = new List<Tbl_Clarification_Master>();
-            try { 
-            con = Utility.Util.Connection("DBEntities");
-            SqlCommand cmd = new SqlCommand("SP_Clarification_Master", con);
+            try
+            {
+                con = Utility.Util.Connection("DBEntities");
+                SqlCommand cmd = new SqlCommand("SP_Clarification_Master", con);
 
-            cmd.CommandType = CommandType.StoredProcedure;
-            con.Open();
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd;
-            ds = new DataSet();
-            da.Fill(ds);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
                 RecomVerifyList = new List<Tbl_Clarification_Master>();
 
                 #region For Display role in Table
@@ -848,7 +1060,8 @@ namespace MNServer.ProcessAction.Action
             SqlCommand cmd = new SqlCommand("Tbl_GetBirthRegistration_SP", con);
             con.Open();
 
-            try {
+            try
+            {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@nextAction", actionid);
                 cmd.Parameters.AddWithValue("@BnDType", type);
@@ -859,29 +1072,33 @@ namespace MNServer.ProcessAction.Action
 
                              select new BirthProcess()
                              {
-                                 ID=Convert.ToInt16(dr["ID"]),
+                                 ID = Convert.ToInt16(dr["ID"]),
                                  Name_of_Informant = Convert.ToString(dr["Name_of_Informant"]),
                                  Name_of_Child = Convert.ToString(dr["Name_of_Child"]),
                                  Gender_Of_Child = Convert.ToString(dr["Gender_Of_Child"]),
                                  Date_of_Birth = Convert.ToDateTime(dr["Date_of_Birth"]),
-                                 BnDType= Convert.ToString(dr["BnDType"]),
+                                 Date_of_Death = Convert.ToDateTime(dr["Date_of_Death"]),
+                                 NameOfBnDperson = Convert.ToString(dr["NameofBnDPerson"]),
+                                 AgeofDeceased = Convert.ToString(dr["AgeofDeceased"]),
+                                 BnDType = Convert.ToString(dr["BnDType"]),
                                  //Date_of_Birth  = DateTime.ParseExact(dr["Date_of_Birth"].ToString()),
 
                              }).ToList();
-               
+
             }
-          catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.Message.ToString();
             }
-            finally{
+            finally
+            {
                 con.Close();
             }
             return BirthList;
 
         }
 
-        public List<BirthProcess> GetDataofparticularuser(int BR_Id)
+        public List<BirthProcess> GetDataofparticularprocess(int BR_Id)
         {
             con = Utility.Util.Connection("DBEntities");
             List<BirthProcess> BirthList = new List<BirthProcess>();
@@ -1007,14 +1224,14 @@ namespace MNServer.ProcessAction.Action
             return InsertedResult;
         }
 
-
-         private string checkAndGetValue(string param)
+        private string checkAndGetValue(string param)
         {
             if (string.IsNullOrEmpty(param))
                 param = "";
 
             return param;
         }
+
         private DateTime checkAndGetDate(DateTime da)
         {
             string date = Convert.ToString(da);
@@ -1027,7 +1244,41 @@ namespace MNServer.ProcessAction.Action
             return da;
         }
 
-        
+        public List<AppealDoc> ShowAppealdate(string B_ID)
+        {
+            con = Utility.Util.Connection("DBEntities");
+            List<AppealDoc> AppealCommentList = new List<AppealDoc>();
+            SqlCommand cmd = new SqlCommand("SP_Select_AppealDoc", con);
+            con.Open();
+            try
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@BR_ID", B_ID);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                AppealCommentList = (from DataRow dr in dt.Rows
+
+                                     select new AppealDoc()
+                                     {
+                                         ID = Convert.ToInt16(dr["ID"]),
+                                         BR_ID = Convert.ToString(dr["BR_ID"]),
+                                         AppealFileName = Convert.ToString(dr["AppealDocname"]),
+                                         AppealFilePath = Convert.ToString(dr["DocFilePath"]),
+                                         AppealComment = Convert.ToString(dr["AppealComments"]),
+
+                                     }).ToList();
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+            finally
+            {
+                con.Close();
+            }
+            return AppealCommentList;
+        }
     }
 
 

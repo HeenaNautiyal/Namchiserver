@@ -493,6 +493,18 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
           <Parameter Name="Autherisation" Type="int" Mode="In" />
           <Parameter Name="ResultValue" Type="varchar(max)" Mode="InOut" />
         </Function>
+        <Function Name="SP_UpdateDocumentList_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BR_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Docname" Type="nvarchar" Mode="In" />
+          <Parameter Name="Doctype" Type="nvarchar" Mode="In" />
+          <Parameter Name="DocFilePath" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+          <Parameter Name="Custid" Type="int" Mode="In" />
+          <Parameter Name="Msg" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ViewBndDocuments_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BR_ID" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_ViewDocuments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cust_id" Type="int" Mode="In" />
           <Parameter Name="Msg" Type="varchar(max)" Mode="InOut" />
@@ -527,7 +539,7 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
           <Parameter Name="Msg" Type="varchar(max)" Mode="InOut" />
         </Function>
         <Function Name="Tbl_BirthRegistration_Update_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="B_ID" Type="nvarchar" Mode="In" />
           <Parameter Name="Name_of_Informant" Type="varchar" Mode="In" />
           <Parameter Name="Name_of_Child" Type="varchar" Mode="In" />
           <Parameter Name="Gender_of_Child" Type="varchar" Mode="In" />
@@ -538,16 +550,22 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
           <Parameter Name="Address" Type="varchar" Mode="In" />
           <Parameter Name="Gram_Panchayat_Unit" Type="varchar" Mode="In" />
           <Parameter Name="Nationality" Type="bit" Mode="In" />
-          <Parameter Name="City_name" Type="varchar" Mode="In" />
+          <Parameter Name="NextAction" Type="varchar" Mode="In" />
           <Parameter Name="DocumentType" Type="varchar" Mode="In" />
           <Parameter Name="FileName" Type="varchar(max)" Mode="In" />
           <Parameter Name="DocumentName" Type="varchar" Mode="In" />
           <Parameter Name="PassportNo" Type="varchar" Mode="In" />
           <Parameter Name="FileContent" Type="varchar(max)" Mode="In" />
           <Parameter Name="UserID" Type="varchar" Mode="In" />
-          <Parameter Name="CreatedOn" Type="datetime" Mode="In" />
           <Parameter Name="ModifyDate" Type="datetime" Mode="In" />
           <Parameter Name="Status" Type="varchar" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+          <Parameter Name="Custid" Type="int" Mode="In" />
+          <Parameter Name="BnDType" Type="nvarchar" Mode="In" />
+          <Parameter Name="AgeofDeceased" Type="int" Mode="In" />
+          <Parameter Name="NameofBnDPerson" Type="nvarchar" Mode="In" />
+          <Parameter Name="Date_of_Death" Type="date" Mode="In" />
+          <Parameter Name="PlaceofDeath" Type="nvarchar" Mode="In" />
           <Parameter Name="Msg" Type="varchar(max)" Mode="InOut" />
         </Function>
         <Function Name="Tbl_DeathRegistration_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -571,6 +589,7 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
         </Function>
         <Function Name="Tbl_GetBirthRegistration_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="nextAction" Type="varchar" Mode="In" />
+          <Parameter Name="BnDType" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="DBModelStoreContainer">
           <EntitySet Name="ProcessMastertoRoleMap" EntityType="Self.ProcessMastertoRoleMap" Schema="dbo" store:Type="Tables" />
@@ -952,7 +971,7 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
             <Parameter Name="Msg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Tbl_BirthRegistration_Update_SP" ReturnType="Collection(String)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="B_ID" Mode="In" Type="String" />
             <Parameter Name="Name_of_Informant" Mode="In" Type="String" />
             <Parameter Name="Name_of_Child" Mode="In" Type="String" />
             <Parameter Name="Gender_of_Child" Mode="In" Type="String" />
@@ -963,16 +982,22 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
             <Parameter Name="Address" Mode="In" Type="String" />
             <Parameter Name="Gram_Panchayat_Unit" Mode="In" Type="String" />
             <Parameter Name="Nationality" Mode="In" Type="Boolean" />
-            <Parameter Name="City_name" Mode="In" Type="String" />
+            <Parameter Name="NextAction" Mode="In" Type="String" />
             <Parameter Name="DocumentType" Mode="In" Type="String" />
             <Parameter Name="FileName" Mode="In" Type="String" />
             <Parameter Name="DocumentName" Mode="In" Type="String" />
             <Parameter Name="PassportNo" Mode="In" Type="String" />
             <Parameter Name="FileContent" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="String" />
-            <Parameter Name="CreatedOn" Mode="In" Type="DateTime" />
             <Parameter Name="ModifyDate" Mode="In" Type="DateTime" />
             <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+            <Parameter Name="Custid" Mode="In" Type="Int32" />
+            <Parameter Name="BnDType" Mode="In" Type="String" />
+            <Parameter Name="AgeofDeceased" Mode="In" Type="Int32" />
+            <Parameter Name="NameofBnDPerson" Mode="In" Type="String" />
+            <Parameter Name="Date_of_Death" Mode="In" Type="DateTime" />
+            <Parameter Name="PlaceofDeath" Mode="In" Type="String" />
             <Parameter Name="Msg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Tbl_DeathRegistration_SP" ReturnType="Collection(String)">
@@ -995,7 +1020,8 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
             <Parameter Name="Msg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Tbl_GetBirthRegistration_SP" ReturnType="Collection(DBModel.Tbl_GetBirthRegistration_SP_Result)" >
-          <Parameter Name="nextAction" Mode="In" Type="String" />
+            <Parameter Name="nextAction" Mode="In" Type="String" />
+            <Parameter Name="BnDType" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Tbl_Birth_Process_Action" EntityType="DBModel.Tbl_Birth_Process_Action" />
           <FunctionImport Name="SP_GetDetailofSingleUser" ReturnType="Collection(DBModel.SP_GetDetailofSingleUser_Result)">
@@ -1065,7 +1091,19 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
           <EntitySet Name="Tbl_Document_BnD_List" EntityType="DBModel.Tbl_Document_BnD_List" />
           <EntitySet Name="Tbl_Document_Identity_List" EntityType="DBModel.Tbl_Document_Identity_List" />
           <FunctionImport Name="SP_Mail_Content" ReturnType="Collection(DBModel.SP_Mail_Content_Result)">
-            <Parameter Name="ActionN" Mode="In" Type="String" />
+          <Parameter Name="ActionN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ViewBndDocuments_1" ReturnType="Collection(DBModel.SP_ViewBndDocuments_1_Result)">
+          <Parameter Name="BR_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateDocumentList_1">
+            <Parameter Name="BR_ID" Mode="In" Type="String" />
+            <Parameter Name="Docname" Mode="In" Type="String" />
+            <Parameter Name="Doctype" Mode="In" Type="String" />
+            <Parameter Name="DocFilePath" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+            <Parameter Name="Custid" Mode="In" Type="Int32" />
+            <Parameter Name="Msg" Mode="InOut" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_BirthProcessAction_Result">
@@ -1275,6 +1313,12 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
         <ComplexType Name="SP_Mail_Content_Result">
           <Property Type="String" Name="Subject" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="Message" Nullable="true" MaxLength="1000" />
+        </ComplexType>
+        <ComplexType Name="SP_ViewBndDocuments_1_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Docname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Doctype" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DocFilePath" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1756,6 +1800,17 @@ warning 6002: The table/view 'MVCDB.dbo.tbl_audit' does not have a primary key d
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ViewBndDocuments_1" FunctionName="DBModel.Store.SP_ViewBndDocuments_1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBModel.SP_ViewBndDocuments_1_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Docname" ColumnName="Docname" />
+                <ScalarProperty Name="Doctype" ColumnName="Doctype" />
+                <ScalarProperty Name="DocFilePath" ColumnName="DocFilePath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdateDocumentList_1" FunctionName="DBModel.Store.SP_UpdateDocumentList_1" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

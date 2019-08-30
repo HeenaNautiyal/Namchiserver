@@ -1,6 +1,7 @@
 ﻿
 @{
     Layout = null;
+    var str = TempData["Message"].ToString();
 }
 
 <!DOCTYPE html>
@@ -13,7 +14,7 @@
 <body>
     <div> 
         <h3>
-            Invalid ID/Password
+            @str
         </h3>
     </div>
 </body>

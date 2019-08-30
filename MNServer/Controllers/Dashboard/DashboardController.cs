@@ -39,7 +39,7 @@ namespace MNServer.Controllers.Dashboard
         public string ActionId = null;
         public string ActionName = null;
         public int CustomerID = 0;
-
+        public string RejectProcessType = null;
       
         #endregion
 
@@ -51,6 +51,7 @@ namespace MNServer.Controllers.Dashboard
         [HttpGet]
         public ActionResult Dashboard()
         {
+
             #region variabels
             string strTmp = null;
             string getAction_ID = null;
@@ -75,7 +76,7 @@ namespace MNServer.Controllers.Dashboard
             RoletoAction.ShowRolltoAction = objDB.GetTbl_Action_MasterId(Userrole, 1);
             Session["RoleDesc"] = objDB.roleDesc;
 
-            if (RoletoAction.ShowRolltoAction.Count==0)
+            if (RoletoAction.ShowRolltoAction.Count == 0)
             {
                 UserPending = objDB.GetAllUsersPending(Userrole);
                 return View("Dummy");
@@ -96,19 +97,19 @@ namespace MNServer.Controllers.Dashboard
                 }
             }
             #endregion
-           
-            Bprocess.ShowallBirthRegis = objDB.CountPending(getAction_ID,getAction, CustId);
+
+            Bprocess.ShowallBirthRegis = objDB.CountPending(getAction_ID, getAction, CustId);
             Session["ActionId"] = getAction_ID;
             Session["ActionName"] = getAction;
             Session["CustomerID"] = CustId;
 
 
             ActionID_Name = getAction + "|" + getAction_ID;
-            if (Bprocess.ShowallBirthRegis==null)
+            if (Bprocess.ShowallBirthRegis == null)
             {
                 return View("Dummy");
             }
-          
+
             return View(Bprocess);
         }
 
@@ -153,29 +154,59 @@ namespace MNServer.Controllers.Dashboard
         public ActionResult AddAction(int BR_ID,string Message,string Type)
         {
             ActionTaken At = new ActionTaken();
+
             string custid = Session["Cust_ID"].ToString();
+
             if (Message != null)
             {
                 Session["BirthRegister_ID"] = BR_ID;
                 BirthProcessAction Bprocess = new BirthProcessAction();
-                At.Showall = Bprocess.GetDataofparticularuser(BR_ID);
+
+                #region Show all data of Birth/Death Process
+                At.Showall = Bprocess.GetDataofparticularprocess(BR_ID);
+                #endregion
+
+                #region Showall comments During verification
                 At.ShowAllComments = Bprocess.GetAllCommentsdata(BR_ID);
+                #endregion
+
+                #region show all files loaded in Sql
                 At.ShowallMessage = Bprocess.FileLoadMessage(Message);
+                #endregion
+
+                #region all Recomend/ clarification Comments
                 At.Allrecomendedvarification = Bprocess.AddrecomendVerification();
+                #endregion
+
+                #region Appeal doc
+                At.Appdoc = Bprocess.ShowAppealdate(BR_ID.ToString());
+
+
+                #endregion
+
                 At.BnDType = Type;
                 return View(At);
-                
+
             }
             else
             {
                 Session["BirthRegister_ID"] = BR_ID;
                 BirthProcessAction Bprocess = new BirthProcessAction();
-                At.Showall = Bprocess.GetDataofparticularuser(BR_ID);
+                At.Showall = Bprocess.GetDataofparticularprocess(BR_ID);
                 At.ShowAllComments = Bprocess.GetAllCommentsdata(BR_ID);
                 At.Allrecomendedvarification = Bprocess.AddrecomendVerification();
-                At.viewIdentityDocument = Bprocess.ShowIdentityDocumentList(custid);
-                At.viewBnDDocument = Bprocess.ShowBnDDocumentList();
+                string ProcessNo = Type + "_" + BR_ID;
+
+                At.viewIdentityDocument = Bprocess.ShowIdentityDocumentList(BR_ID.ToString());
+
+                At.viewBnDDocument = Bprocess.ShowBnDDocumentList_1(ProcessNo);
+
                 At.RoleName = Session["RoleDesc"].ToString();
+                #region Appeal doc
+                At.Appdoc = Bprocess.ShowAppealdate(ProcessNo);
+
+
+                #endregion
                 return View(At);
             }
 
@@ -189,7 +220,7 @@ namespace MNServer.Controllers.Dashboard
             {
                 Session["BirthRegister_ID"] = BR_ID;
                 BirthProcessAction Bprocess = new BirthProcessAction();
-                At.Showall = Bprocess.GetDataofparticularuser(BR_ID);
+                At.Showall = Bprocess.GetDataofparticularprocess(BR_ID);
                 At.ShowAllComments = Bprocess.GetAllCommentsdata(BR_ID);
                 At.ShowallMessage = Bprocess.FileLoadMessage(Message);
                 return View(At);
@@ -199,7 +230,7 @@ namespace MNServer.Controllers.Dashboard
             {
                 Session["BirthRegister_ID"] = BR_ID;
                 BirthProcessAction Bprocess = new BirthProcessAction();
-                At.Showall = Bprocess.GetDataofparticularuser(BR_ID);
+                At.Showall = Bprocess.GetDataofparticularprocess(BR_ID);
                 At.ShowAllComments = Bprocess.GetAllCommentsdata(BR_ID);
                 At.BnDType = Type;
                 return View(At);
@@ -215,26 +246,18 @@ namespace MNServer.Controllers.Dashboard
             string Action = CommentData.Action;
             string comments = CommentData.Comments;
             BirthProcessAction Bprocess = new BirthProcessAction();
-          
-            string Insertresult = Bprocess.AddDataComments(BR_ID,UserName,Action,comments, UserId);
-           
 
-          
-           
-
-            //TempData.Remove("Message");
-            //TempData["Message"] = Utility.Util.AltMsg("Verification has been done");
+            //insert all comment data in database
+            string Insertresult = Bprocess.AddDataComments(BR_ID, UserName, Action, comments, UserId);
 
             return RedirectToAction("Dashboard", "DashBoard");
-           
-            //return View();
-            
+
         }
 
         public ActionResult AddPayment( string DType)
         {
-            string BR_IDstr = DType + "_"+Session["BirthRegister_ID"].ToString();
-            
+            string BR_IDstr = DType + "_" + Session["BirthRegister_ID"].ToString();
+
             List<MailNotification> MailInfo = Bprocess.getMailInfo("Payment", BR_IDstr.ToString());
             for (int i = 0; i < MailInfo.Count; i++)
             {
@@ -248,20 +271,20 @@ namespace MNServer.Controllers.Dashboard
         [HttpGet]
         public ActionResult DownLoadFile(int id)
         {
-           // string FileMsg = null;
+            // string FileMsg = null;
             ActionTaken At = new ActionTaken();
             List<BirthProcess> ObjFiles = GetFileList(id);
 
             var FileById = (from FC in ObjFiles
-                          
-            select new { FC.DocumentName, FC.FileName }).ToList().FirstOrDefault();
+
+                            select new { FC.DocumentName, FC.FileName }).ToList().FirstOrDefault();
 
             byte[] data = Convert.FromBase64String(FileById.FileName);
             string imreBase64Data = Convert.ToBase64String(data);
-            string imgDataURL = string.Format( imreBase64Data);
+            string imgDataURL = string.Format(imreBase64Data);
             //Passing image data in viewbag to view  
             ViewBag.ImageData = imgDataURL;
-            return View("ViewDocument", imgDataURL,id);
+            return View("ViewDocument", imgDataURL, id);
 
             #region for save the file in path   
             // string strpath = "C:\\Users\\Caritas-Heena\\Desktop\\";
@@ -325,15 +348,15 @@ namespace MNServer.Controllers.Dashboard
         [HttpPost]
         public JsonResult GetCountries()
         {
-           // ActionTaken At = new ActionTaken();
+            // ActionTaken At = new ActionTaken();
             BirthProcessAction Bprocess = new BirthProcessAction();
             //At.Allrecomendedvarification = 
-            List<Tbl_Clarification_Master> objCnt= Bprocess.AddrecomendVerification();
+            List<Tbl_Clarification_Master> objCnt = Bprocess.AddrecomendVerification();
             return Json(objCnt);
         }
 
         [HttpPost]
-        public JsonResult AjaxRecomendRejectCall(RecommendedRejects RR)
+        public ActionResult AjaxRecomendRejectCall(RecommendedRejects RR)
         {
             RejectList = RR.Action;
             RejectComments = RR.Comments;
@@ -343,10 +366,12 @@ namespace MNServer.Controllers.Dashboard
             UserName = Session["U_Name"].ToString();
             UserId = Convert.ToInt16(Session["U_ID"]);
             Bprocess = new BirthProcessAction();
-            InsertResult = Bprocess.AddRejectrecomendVerification(BR_ID,UserId, UserName, RejectActionSection, RejectList,RejectComments);
-            if(InsertResult!= "Approve"|| InsertResult != "Clarification" || InsertResult != "RecommendRejection")
+
+            InsertResult = Bprocess.AddRejectrecomendVerification(BR_ID, UserId, UserName, RejectActionSection, RejectList, RejectComments);
+
+            if (InsertResult != "Approve" || InsertResult != "Clarification" || InsertResult != "RecommendRejection")
             {
-               ViewBag.Message = Utility.Util.AltMsg("Verification has been done");
+                ViewBag.Message = Utility.Util.AltMsg("Verification has been done");
             }
             string BR_IDstr = "_" + Session["BirthRegister_ID"].ToString();
 
@@ -370,31 +395,194 @@ namespace MNServer.Controllers.Dashboard
                     mailNotification.Notify();
                 }
             }
-            return Json(RejectList, JsonRequestBehavior.AllowGet);
+
+            return RedirectToAction("Dashboard", "DashBoard");
         }
 
-        public ActionResult Clarification( int id)
+        public ActionResult Clarification(int id, string BnDType, string Next)
         {
             ClarificationModelList CmodelList = new ClarificationModelList();
+            CmodelList.Attaken = new ActionTaken();
+
             int CustId = Convert.ToInt32(Session["Cust_ID"]);
             BirthProcessAction Bprocess = new BirthProcessAction();
-            string Clarifications= Bprocess.CheckClarification(id, CustId);
+            string Clarifications = Bprocess.CheckClarification(id, CustId);
             string[] SplitStringLine = Clarifications.Split(',', '|');
             List<string> ClarificationList = new List<string>();
-            foreach(string List in SplitStringLine)
+            foreach (string List in SplitStringLine)
             {
                 ClarificationList.Add(List);
             }
-
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             foreach (var item in ClarificationList)
             {
                 sb.Append(item + "\n");
             }
             var str = new HtmlString(sb.ToString());
+            CmodelList.RegistrationForm = Bprocess.GetDataofparticularprocess(id);
             CmodelList.Clarification = str.ToString();
 
+
+            CmodelList.Attaken.viewIdentityDocument = Bprocess.ShowIdentityDocumentList(id.ToString());
+
+            string ProcessNo = BnDType + "_" + id;
+            //CmodelList.viewBnDDocument = Bprocess.ShowBnDDocumentList();
+            CmodelList.Attaken.viewBnDDocument = Bprocess.ShowBnDDocumentList_1(ProcessNo);
+
+            if (BnDType == "BR")
+            {
+                CmodelList.DocList = Bprocess.DocumentList(1); //1 is process id
+            }
+            else
+                CmodelList.DocList = Bprocess.DocumentList(2); //2 is process id
+
+
+
             return View(CmodelList);
+        }
+
+        public ActionResult Rejection(int id, string BnDType)
+        {
+            ClarificationModelList CmodelList = new ClarificationModelList();
+            CmodelList.Attaken = new ActionTaken();
+            string ProcessNo = null;
+
+            int CustId = Convert.ToInt32(Session["Cust_ID"]);
+            BirthProcessAction Bprocess = new BirthProcessAction();
+
+            string Clarifications = Bprocess.CheckClarification(id, CustId);
+            string[] SplitStringLine = Clarifications.Split(',', '|');
+            List<string> ClarificationList = new List<string>();
+            foreach (string List in SplitStringLine)
+            {
+                ClarificationList.Add(List);
+            }
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            foreach (var item in ClarificationList)
+            {
+                sb.Append(item + "\n");
+            }
+            var str = new HtmlString(sb.ToString());
+
+
+            #region Show birth/Death Page
+            CmodelList.RegistrationForm = Bprocess.GetDataofparticularprocess(id);
+            CmodelList.Clarification = str.ToString();
+            #endregion
+
+            #region  Show identity Documents file
+            CmodelList.Attaken.viewIdentityDocument = Bprocess.ShowIdentityDocumentList(id.ToString());
+            #endregion
+
+            #region  Show BnD related files
+            ProcessNo = BnDType + "_" + id;
+            CmodelList.Attaken.viewBnDDocument = Bprocess.ShowBnDDocumentList_1(ProcessNo);
+            #endregion
+
+            #region Show Document list related to birth or Death Specific
+            if (BnDType == "BR")
+            {
+                CmodelList.DocList = Bprocess.DocumentList(1); //1 is process id
+            }
+            else
+                CmodelList.DocList = Bprocess.DocumentList(2); //2 is process id
+            #endregion
+
+            #region show all Comments History
+
+            CmodelList.Attaken.ShowAllComments = Bprocess.GetAllCommentsdata(id);
+
+            #endregion
+            return View(CmodelList);
+        }
+
+
+        public ActionResult AddClarification(ClarificationModelList contact)
+        {
+            Bprocess = new BirthProcessAction();
+            int Custid = Convert.ToInt32(Session["Cust_ID"]);
+
+            for (int i = 0; i < contact.RegistrationForm.Count; i++)
+            {
+                int id = contact.RegistrationForm[i].ID;
+
+
+                string result = Bprocess.edit(contact.RegistrationForm[i], 1, Custid, contact.RegistrationForm[i].FormType);
+                string[] line = result.Split('|');
+                string Rt = line[0].ToString();
+                string Appno = line[1].ToString();
+
+                int Roleid = Convert.ToInt16(Session["SortedList1"]);
+
+
+                string FormType_1 = contact.RegistrationForm[i].BnDType.ToString();
+
+                Session["AppNo"] = FormType_1 + "_" + Appno;
+
+                if (Rt == "Update Successfully")
+                {
+                    string fileSavePath = Server.MapPath("~/UploadedFiles/");
+                    BR_ID = Convert.ToInt16(Session["BirthRegister_ID"]);
+
+                    string rt = Utility.Util.EditDocuments(Request, contact.DocList, fileSavePath,
+                        FormType_1 + "_" + Appno, Custid);
+                }
+            }
+            return RedirectToAction("Dashboard", "DashBoard");
+        }
+
+        public ActionResult AddRejection(ClarificationModelList AppealContact)
+        {
+            Bprocess = new BirthProcessAction();
+
+            for (int i = 0; i < AppealContact.RegistrationForm.Count; i++)
+            {
+                int id = AppealContact.RegistrationForm[i].ID;
+                int Custid = Convert.ToInt32(Session["Cust_ID"]);
+                string Appno = id.ToString();
+
+                int Roleid = Convert.ToInt16(Session["SortedList1"]);
+
+
+                string FormType_1 = AppealContact.RegistrationForm[i].BnDType.ToString();
+
+                Session["AppNo"] = FormType_1 + "_" + Appno;
+
+
+                string fileSavePath = Server.MapPath("~/UploadedFiles/");
+
+                BR_ID = AppealContact.RegistrationForm[0].ID;
+
+                Tbl_Document_List tblObj = new Tbl_Document_List();
+
+                tblObj.Docname = AppealContact.AppealDoc.AppealFileName;
+
+                List<Tbl_Document_List> list = new List<Tbl_Document_List>();
+
+                list.Add(tblObj);
+
+                string messageappeal = AppealContact.AppealDoc.AppealComment;
+
+
+                //Appeal Applied
+                string Insertresult = Bprocess.AddDataComments(BR_ID, "", "AppealRejection", "", 0);
+
+                string rt = Utility.Util.AddAppealDocument(Request, list, fileSavePath,
+                     FormType_1 + "_" + Appno, Custid, messageappeal);
+
+                string BR_IDstr = AppealContact.RegistrationForm[0].BnDType + "_" + BR_ID;
+                List<MailNotification> MailInfo = Bprocess.getMailInfo("BirthAppealtoApprover", BR_IDstr.ToString());
+                for (int k = 0; k < MailInfo.Count; k++)
+                {
+                    Utility.Util.INotificationService mailNotification = new Utility.Util.MailService
+                   ("heena.nautiyal@caritaseco.in", MailInfo[k].Subject, MailInfo[k].MailAppNo);
+                    mailNotification.Notify();
+                }
+
+            }
+
+
+            return RedirectToAction("Dashboard", "DashBoard");
         }
 
         public ActionResult DownloadFile_I(string DocName,string Doctype)
@@ -409,12 +597,22 @@ namespace MNServer.Controllers.Dashboard
             string fileName = DocName;
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
-        public ActionResult DownloadFile_BnD(string DocName, string Doctype)
+        public ActionResult DownloadFile_BnD(string DocName, string Doctype, string folder)
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles\\Identity_Document\\";
+            string path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles";
+            path = path + "\\" + folder + "\\";
             byte[] fileBytes = System.IO.File.ReadAllBytes(path + DocName);
             string fileName = DocName;
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
+        public ActionResult DownloadFile_Appeal(string DocName, string folder)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "UploadedFiles";
+            path = path + "\\" + folder + "\\";
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path + DocName);
+            string fileName = DocName;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
     }
 }

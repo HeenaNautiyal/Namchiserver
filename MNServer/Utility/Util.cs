@@ -79,11 +79,6 @@ namespace MNServer.Utility
             {
                 con.Close();
             }
-            //foreach (DataRow row in DTable.Rows)
-            //{
-            //    ObjbirthProcessActionSeq.Add(Convert.ToInt16(row["Seq_ID"]), row["ActionName"].ToString());
-            //}
-
             return ObjbirthProcessActionSeq;
 
         }
@@ -153,11 +148,7 @@ namespace MNServer.Utility
             string Next_Action_Name = null;
             DataSet Dset = new DataSet();
             List<RoletoAction> SeqList = null;
-            //string NextAction = null;
-
             con = Utility.Util.Connection("DBEntities");
-
-
 
             try
             {
@@ -240,7 +231,7 @@ namespace MNServer.Utility
         }
         
         public static string AddDocuments(HttpRequestBase Request, List<Tbl_Document_List> Doclist, 
-            string fileSavePath, string Appno, int Custid )
+            string fileSavePathMain, string Appno, int Custid )
         {
             string results = "";
             if (Request.Files.AllKeys.Length > 0)
@@ -248,6 +239,7 @@ namespace MNServer.Utility
                 BirthProcessAction obj = new BirthProcessAction();
                 for (int k = 0; k < Doclist.Count; k++)
                 {
+                    string fileSavePath = fileSavePathMain;//added this-Soumendu
                     var DocumentTmp = Doclist[k];
                     var files = Request.Files;
                     
@@ -293,8 +285,8 @@ namespace MNServer.Utility
                                 DocumentTmp.IsActive = true;
                                 DocumentTmp.BR_ID = Appno;
                                 DocumentTmp.Doctype = Doclist[k].Doctype;
-                                results = results + obj.InsertDocumentAttachment
-                                (DocumentTmp.BR_ID, fileName, DocumentTmp.DocFilePath, DocumentTmp.Doctype, DocumentTmp.IsActive,Custid);
+                                results = results + obj.InsertDocumentAttachment(DocumentTmp.BR_ID, fileName, 
+                                    DocumentTmp.DocFilePath, DocumentTmp.Doctype, DocumentTmp.IsActive,Custid);
                                 file.SaveAs(fileSavePath);
                             }
                         }
@@ -304,6 +296,70 @@ namespace MNServer.Utility
             return results;
         }
 
+        public static string EditDocuments(HttpRequestBase Request, List<Tbl_Document_List> Doclist,
+        string fileSavePath, string Appno, int Custid)
+        {
+            string results = "";
+            if (Request.Files.AllKeys.Length > 0)
+            {
+                BirthProcessAction obj = new BirthProcessAction();
+                for (int k = 0; k < Doclist.Count; k++)
+                {
+                    var DocumentTmp = Doclist[k];
+                    var files = Request.Files;
+
+                    var file = files[k];
+                    if (file != null)
+                    {
+                        var fileName = file.FileName;
+                        if (fileName != null && fileName.Trim().Length > 0)
+                        {
+                            if (fileName.Contains(@"\"))
+                            {
+                                fileName = fileName.Substring(fileName.LastIndexOf(@"\"));
+                            }
+                            string Docname = DocumentTmp.Docname;
+
+                            if (Docname.Equals("Identity Document"))
+                            {
+                                Docname = Docname.Replace(" ", "_");
+                            }
+                            else
+                            {
+                                string[] temp = Appno.Split('_');
+                                Docname = temp[0];
+                            }
+
+                            int idx = fileName.LastIndexOf(".");
+                            string fileNameTemp = fileName.Substring(0, idx);
+                            string extemp = fileName.Substring(idx);
+                            fileNameTemp = fileNameTemp + "_" + Appno;
+                            fileName = fileNameTemp + extemp;
+
+                            fileSavePath = fileSavePath + Docname;
+                            if (!Directory.Exists(fileSavePath))
+                            {
+                                Directory.CreateDirectory(fileSavePath);
+                            }
+
+                            fileSavePath = fileSavePath + "\\" + fileName;
+
+
+                            //populate DocumentTmp
+                            DocumentTmp.DocFilePath = fileSavePath;
+                            DocumentTmp.IsActive = true;
+                            DocumentTmp.BR_ID = Appno;
+                            DocumentTmp.Doctype = Doclist[k].Doctype;
+                            results = results + obj.UpdateDocumentAttachment
+                            (DocumentTmp.BR_ID, fileName, DocumentTmp.DocFilePath, DocumentTmp.Doctype, DocumentTmp.IsActive, Custid);
+                            file.SaveAs(fileSavePath);
+                        }
+                    }
+
+                }
+            }
+            return results;
+        }
 
         #region EmailIntegration
         public class MailService : INotificationService
@@ -396,5 +452,99 @@ namespace MNServer.Utility
         }
         #endregion
 
+        public string checkAndGetValue(string param)
+        {
+            if (string.IsNullOrEmpty(param))
+                param = "";
+
+            return param;
+        }
+
+        public DateTime checkAndGetDate(DateTime da)
+        {
+            string date = Convert.ToString(da);
+            if (date.Equals("01-01-0001 00:00:00"))
+            {
+                da = DateTime.Now;
+            }
+
+
+            return da;
+        }
+
+        public static string AddAppealDocument(HttpRequestBase Request, List<Tbl_Document_List> Doclist,
+        string fileSavePath, string Appno, int Custid, string messageappeal)
+        {
+
+            string results = "";
+            if (Request.Files.AllKeys.Length > 0)
+            {
+                BirthProcessAction obj = new BirthProcessAction();
+
+                for (int k = 0; k < Doclist.Count; k++)
+                {
+                    try
+                    {
+                        var DocumentTmp = Doclist[k];
+                        var files = Request.Files;
+
+                        var file = files[k];
+                        if (file != null)
+                        {
+                            var fileName = file.FileName;
+                            if (fileName != null && fileName.Trim().Length > 0)
+                            {
+                                if (fileName.Contains(@"\"))
+                                {
+                                    fileName = fileName.Substring(fileName.LastIndexOf(@"\"));
+                                }
+                                string Docname = DocumentTmp.Docname;
+
+                                if (Docname.Equals("Identity Document"))
+                                {
+                                    Docname = Docname.Replace(" ", "_");
+                                }
+                                else
+                                {
+                                    string[] temp = Appno.Split('_');
+                                    Docname = "AP";
+                                }
+
+                                int idx = fileName.LastIndexOf(".");
+                                string fileNameTemp = fileName.Substring(0, idx);
+                                string extemp = fileName.Substring(idx);
+                                fileNameTemp = fileNameTemp + "_" + Appno;
+                                fileName = fileNameTemp + extemp;
+
+                                fileSavePath = fileSavePath + Docname;
+                                if (!Directory.Exists(fileSavePath))
+                                {
+                                    Directory.CreateDirectory(fileSavePath);
+                                }
+
+                                fileSavePath = fileSavePath + "\\" + fileName;
+
+
+                                //populate DocumentTmp
+                                DocumentTmp.DocFilePath = fileSavePath;
+                                DocumentTmp.IsActive = true;
+                                DocumentTmp.BR_ID = Appno;
+                                string Appealmessage =
+                                results = results + obj.InsertAppealDocAtt
+                                (DocumentTmp.BR_ID, fileName, DocumentTmp.DocFilePath, DocumentTmp.IsActive, messageappeal);
+                                file.SaveAs(fileSavePath);
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.Message.ToString();
+                    }
+
+                }
+            }
+            return results;
+        }
     }
 }

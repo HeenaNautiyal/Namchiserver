@@ -60,15 +60,16 @@ namespace MNServer.Controllers.BirthRegistration
 
                 obj = new BirthProcessAction();
                 int Custid = Convert.ToInt32(Session["Cust_ID"]);
-
-                if (BRobject.CustomerGender == "Female")
-                    {
-                        BRobject.Name_of_Mother = BRobject.CustomerName;
-                    }
-                else
-                    {
-                        BRobject.Name_of_Father = BRobject.CustomerName;
-                    }
+            //Commented the lines below - Soumendu
+            //
+                //if (BRobject.CustomerGender == "Female")
+                //    {
+                //        BRobject.Name_of_Mother = BRobject.CustomerName;
+                //    }
+                //else
+                //    {
+                //        BRobject.Name_of_Father = BRobject.CustomerName;
+                //    }
                     string result = obj.create(BRobject, 1, Custid, BRobject.FormType);
                     string[] line = result.Split('|');
                     string Rt = line[0].ToString();
@@ -83,6 +84,7 @@ namespace MNServer.Controllers.BirthRegistration
             if (Rt == "Registered Successfully")
             {
                 string fileSavePath = HttpContext.Server.MapPath("~/UploadedFiles/");
+
                 string rt=Utility.Util.AddDocuments(Request, BRobject.DocList, fileSavePath,
                     FormType_1 + "_"+ Appno, CustID);
 
